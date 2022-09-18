@@ -45,9 +45,9 @@
       "node": true
     },
     "extends": [
-      "plugin:meteor/recommended",
-      "plugin:react/recommended",
       "airbnb",
+      "plugin:react/recommended",
+      "plugin:meteor/recommended",
       "prettier"
     ],
     "parserOptions": {

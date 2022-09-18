@@ -19,6 +19,7 @@ export default function FicsIndex() {
         <div key={f._id}>
           <div>{f.title}</div>
           <div>{f.description}</div>
+          <div>User ID:{f.userId}</div>
         </div>
       ))}
     </div>

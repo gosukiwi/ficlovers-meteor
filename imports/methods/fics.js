@@ -15,7 +15,7 @@ Meteor.methods({
       title,
       description,
       createdAt: new Date(),
-      // userId: this.userId,
+      userId: this.userId,
     });
   },
 });
