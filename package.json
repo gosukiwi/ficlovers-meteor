@@ -1,0 +1,95 @@
+{
+  "name": "ficlovers-meteor",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "cross-env TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "bcrypt": "^5.0.1",
+    "meteor-node-stubs": "^1.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.35.0",
+    "react-router-dom": "^6.4.0"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.jsx",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-meteor": "^7.3.0",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "2.7.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "plugin:meteor/recommended",
+      "plugin:react/recommended",
+      "airbnb",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "meteor"
+    ],
+    "rules": {
+      "react/jsx-props-no-spreading": "off",
+      "func-names": "off",
+      "no-underscore-dangle": "off",
+      "import/no-unresolved": [
+        "error",
+        {
+          "ignore": [
+            "^meteor/",
+            "^/imports"
+          ]
+        }
+      ],
+      "import/no-absolute-path": [
+        "error",
+        {
+          "ignore": [
+            "^/imports"
+          ]
+        }
+      ],
+      "import/extensions": [
+        "error",
+        {
+          "ignore": [
+            "^/imports"
+          ]
+        }
+      ]
+    }
+  }
+}
