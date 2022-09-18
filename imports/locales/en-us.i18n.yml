@@ -1,0 +1,4 @@
+users:
+  logged_in_as: Logged in as {$username}
+fics:
+  title: 'Fics'

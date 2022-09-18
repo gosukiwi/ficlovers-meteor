@@ -2,13 +2,16 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { Link, Outlet } from "react-router-dom";
+import { useTranslator } from "/imports/ui/i18n";
 
 export default function Layout() {
   const user = useTracker(() => Meteor.user());
+  const t = useTranslator();
+  const username = user ? user.username : "Anon";
 
   return (
     <div>
-      <span>Logged in as {user ? user.username : "Anon"}</span>
+      <span>{t("users.logged_in_as", { username })}</span>
       <nav>
         <ul>
           <li>
