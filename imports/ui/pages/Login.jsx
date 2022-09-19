@@ -26,7 +26,9 @@ export default function Login() {
   const navigate = useNavigate();
   const t = useTranslator();
 
-  const attemptLogin = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     Meteor.loginWithPassword(username, password, (err) => {
       setPassword("");
       if (err) {
@@ -40,6 +42,8 @@ export default function Login() {
 
   return (
     <Flex
+      as="form"
+      onSubmit={handleSubmit}
       minH="100vh"
       align="center"
       justify="center"
@@ -49,7 +53,7 @@ export default function Login() {
         {error && (
           <Alert status="error">
             <AlertIcon />
-            <AlertDescription>Invalid name and/or password.</AlertDescription>
+            <AlertDescription>{t("login.error")}</AlertDescription>
           </Alert>
         )}
         <Stack align="center">
@@ -66,7 +70,7 @@ export default function Login() {
         >
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t("login.username")}</FormLabel>
               <Input
                 type="text"
                 value={username}
@@ -74,7 +78,7 @@ export default function Login() {
               />
             </FormControl>
             <FormControl id="password">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t("login.password")}</FormLabel>
               <Input
                 type="password"
                 value={password}
@@ -87,17 +91,17 @@ export default function Login() {
                 align="start"
                 justify="center"
               >
-                <Link color="blue.400">Forgot password?</Link>
+                <Link color="blue.400">{t("login.forgot_password")}</Link>
               </Stack>
               <Button
+                type="submit"
                 bg="blue.400"
                 color="white"
                 _hover={{
                   bg: "blue.500",
                 }}
-                onClick={attemptLogin}
               >
-                Sign in
+                {t("login.sign_in")}
               </Button>
             </Stack>
           </Stack>

@@ -4,6 +4,11 @@ fics:
   title: 'Fics'
 login:
   title: Sign in to Ficlovers
+  error: Invalid username or password.
+  username: Username
+  password: Password
+  sign_in: Sign in
+  forgot_password: Forgot password?
 typewritter:
   first: To start writing your next masterpiece!
   second: To read a bunch of fics!
