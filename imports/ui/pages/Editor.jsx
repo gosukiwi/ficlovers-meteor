@@ -1,9 +1,7 @@
 import { Meteor } from "meteor/meteor";
-import React from "react";
+import React, { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useParams } from "react-router-dom";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useTranslator } from "/imports/ui/i18n";
 import FicsCollection from "/imports/db/FicsCollection";
 import {
@@ -14,8 +12,10 @@ import {
   Collapse,
   useDisclosure,
   Input,
+  Button,
 } from "@chakra-ui/react";
 import { FiChevronRight, FiChevronDown } from "react-icons/fi";
+import CKEditor from "/imports/ui/CKEditor";
 
 function ChapterList() {
   const { isOpen, onToggle } = useDisclosure();
@@ -31,7 +31,6 @@ function ChapterList() {
     >
       <Flex cursor="pointer" alignItems="center">
         <Box flexGrow={1}>
-          <Text as="b">A dummy Chapter</Text>
           <Text color="gray.500">Chapter 1 of 4</Text>
         </Box>
         {isOpen ? <FiChevronDown /> : <FiChevronRight />}
@@ -49,6 +48,7 @@ function ChapterList() {
 
 export default function Editor() {
   const { id } = useParams();
+  const [chapterBody, setChapterBody] = useState("");
   const t = useTranslator();
   const fic = useTracker(() => {
     const handler = Meteor.subscribe("fics");
@@ -63,32 +63,14 @@ export default function Editor() {
   return (
     <Flex direction="column">
       <Heading>{fic.title}</Heading>
-      <ChapterList />
       <Input mt={5} bg="white" size="lg" placeholder={t("editor.title")} />
-      <Box mt={5}>
-        <CKEditor
-          editor={ClassicEditor}
-          data="<p>Hello from CKEditor 5!</p>"
-          config={{
-            toolbar: [
-              "bold",
-              "italic",
-              "link",
-              "bulletedList",
-              "numberedList",
-              "|",
-              "blockQuote",
-              "insertTable",
-              "undo",
-              "redo",
-            ],
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
-        />
-      </Box>
+      <ChapterList />
+      <CKEditor
+        mt={5}
+        placeholder={t("editor.placeholder")}
+        value={chapterBody}
+        onChange={setChapterBody}
+      />
     </Flex>
   );
 }

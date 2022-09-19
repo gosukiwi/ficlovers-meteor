@@ -38,3 +38,4 @@ validation:
   required: "{$field} is required"
 editor:
   title: My new chapter
+  placeholder: Once upon a time...
