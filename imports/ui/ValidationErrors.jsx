@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTranslator } from "/imports/ui/i18n";
 import {
@@ -13,7 +14,23 @@ export default function ValidationError({ error }) {
   const t = useTranslator();
   if (!error) return null;
 
-  const details = JSON.parse(error.details);
+  let message;
+  if (error.details) {
+    const details = JSON.parse(error.details);
+    message = Object.entries(details).map(([index, { name, type }]) => {
+      const errorMessage = t(`validation.${type}`, { field: name });
+
+      return (
+        <Text textTransform="capitalize" key={index}>
+          {errorMessage}
+        </Text>
+      );
+    });
+  } else if (Meteor.isDevelopment) {
+    message = error.reason;
+  } else {
+    message = null;
+  }
 
   return (
     <Alert status="error" flexDirection="column">
@@ -21,17 +38,7 @@ export default function ValidationError({ error }) {
         <AlertIcon />
         <AlertTitle>{t("validation.title")}</AlertTitle>
       </Stack>
-      <AlertDescription textAlign="center">
-        {Object.entries(details).map(([index, { name, type }]) => {
-          const message = t(`validation.${type}`, { field: name });
-
-          return (
-            <Text textTransform="capitalize" key={index}>
-              {message}
-            </Text>
-          );
-        })}
-      </AlertDescription>
+      <AlertDescription textAlign="center">{message}</AlertDescription>
     </Alert>
   );
 }

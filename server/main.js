@@ -1,7 +1,9 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import "/imports/methods/fics";
+import "/imports/methods/chapters";
 import "/imports/publications/fics";
+import "/imports/publications/chapters";
 
 Meteor.startup(() => {
   const USERNAME = process.env.FICLOVERS_SEED_USER_USERNAME;

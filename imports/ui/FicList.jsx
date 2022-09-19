@@ -16,8 +16,10 @@ function Fic({ title, description, id }) {
         alt="Dan Abramov"
       />
       <Box m={4} flexGrow={1}>
-        <Heading size="sm">{title}</Heading>
-        <Text>{description}</Text>
+        <Heading noOfLines={1} size="sm">
+          {title}
+        </Heading>
+        <Text noOfLines={1}>{description}</Text>
       </Box>
       <Flex alignItems="center">
         <Flex
