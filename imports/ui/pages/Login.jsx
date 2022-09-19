@@ -78,14 +78,14 @@ export default function Login() {
                 align="start"
                 justify="center"
               >
-                <Link color="blue.400">{t("login.forgot_password")}</Link>
+                <Link color="cyan.400">{t("login.forgot_password")}</Link>
               </Stack>
               <Button
                 type="submit"
-                bg="blue.400"
+                bg="cyan.400"
                 color="white"
                 _hover={{
-                  bg: "blue.500",
+                  bg: "cyan.500",
                 }}
               >
                 {t("login.sign_in")}

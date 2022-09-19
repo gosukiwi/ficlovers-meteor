@@ -66,17 +66,14 @@ function SidebarContent({ onClose, ...rest }) {
 
   let LinkItems = [
     { name: t("sidebar.trending"), icon: FiTrendingUp, to: "/" },
-    { name: t("sidebar.explore"), icon: FiSearch, to: "/explore" },
-    { name: t("sidebar.favorites"), icon: FiHeart, to: "/favorites" },
-    // { name: "Trending", icon: FiTrendingUp },
-    // { name: "Explore", icon: FiCompass },
-    // { name: "Favourites", icon: FiStar },
+    { name: t("sidebar.search"), icon: FiSearch, to: "/search" },
   ];
 
   if (user) {
     LinkItems = LinkItems.concat([
+      { name: t("sidebar.favorites"), icon: FiHeart, to: "/favorites" },
       { name: t("sidebar.write"), icon: FiEdit3, to: "/write" },
-      { name: t("sidebar.profile"), icon: FiUser },
+      { name: t("sidebar.profile"), icon: FiUser, to: "/profile" },
       { name: t("sidebar.sign_out"), icon: FiLogOut, to: "/logout" },
     ]);
   } else {
@@ -132,8 +129,8 @@ function NavItem({ icon, to, current, children, ...rest }) {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
-          color: "white",
+          bg: current ? "cyan.400" : "gray.50",
+          color: current ? "white" : "black",
         }}
         bg={current ? "cyan.400" : ""}
         color={current ? "white" : ""}
@@ -144,7 +141,7 @@ function NavItem({ icon, to, current, children, ...rest }) {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: "white",
+              color: current ? "white" : "black",
             }}
             as={icon}
           />
