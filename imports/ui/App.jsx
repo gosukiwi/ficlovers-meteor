@@ -7,6 +7,7 @@ import FicsIndex from "./pages/FicsIndex";
 import FicsNew from "./pages/FicsNew";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 // locales
 import "/imports/locales/en-us.i18n.yml";
 
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="fics" element={<FicsIndex />} />
         <Route path="write" element={<FicsNew />} />
         <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
