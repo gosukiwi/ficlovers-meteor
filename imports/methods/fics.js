@@ -4,12 +4,10 @@ import FicsCollection from "/imports/db/FicsCollection";
 
 Meteor.methods({
   "fics.insert": function (title, description) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
     check(title, String);
     check(description, String);
-
-    // if (!this.userId) {
-    //   throw new Meteor.Error("Not authorized.");
-    // }
 
     FicsCollection.insert({
       title,

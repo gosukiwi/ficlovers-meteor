@@ -29,3 +29,6 @@ write:
   title: Title
   description: Description
   submit: Create new fic
+validation:
+  title: Oops something went wrong!
+  required: "{$field} is required"
