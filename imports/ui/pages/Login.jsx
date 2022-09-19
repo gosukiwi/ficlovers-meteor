@@ -8,7 +8,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
@@ -17,7 +16,6 @@ import {
   useColorModeValue,
   Alert,
   AlertIcon,
-  AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
 
@@ -42,30 +40,30 @@ export default function Login() {
 
   return (
     <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
+      minH="100vh"
+      align="center"
+      justify="center"
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         {error && (
           <Alert status="error">
             <AlertIcon />
             <AlertDescription>Invalid name and/or password.</AlertDescription>
           </Alert>
         )}
-        <Stack align={"center"}>
-          <Heading fontSize={"4xl"} textAlign="center">
+        <Stack align="center">
+          <Heading fontSize="4xl" textAlign="center">
             {t("login.title")}
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
+          <Text fontSize="lg" color="gray.600">
             to start writing!
           </Text>
         </Stack>
         <Box
-          rounded={"lg"}
+          rounded="lg"
           bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
+          boxShadow="lg"
           p={8}
         >
           <Stack spacing={4}>
@@ -88,14 +86,14 @@ export default function Login() {
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"center"}
+                align="start"
+                justify="center"
               >
-                <Link color={"blue.400"}>Forgot password?</Link>
+                <Link color="blue.400">Forgot password?</Link>
               </Stack>
               <Button
-                bg={"blue.400"}
-                color={"white"}
+                bg="blue.400"
+                color="white"
                 _hover={{
                   bg: "blue.500",
                 }}
