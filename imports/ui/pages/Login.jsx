@@ -41,21 +41,8 @@ export default function Login() {
   };
 
   return (
-    <Flex
-      as="form"
-      onSubmit={handleSubmit}
-      minH="100vh"
-      align="center"
-      justify="center"
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
+    <Flex as="form" onSubmit={handleSubmit} minH="100vh" justify="center">
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
-        {error && (
-          <Alert status="error">
-            <AlertIcon />
-            <AlertDescription>{t("login.error")}</AlertDescription>
-          </Alert>
-        )}
         <Stack align="center">
           <Heading fontSize="4xl" textAlign="center">
             {t("login.title")}
@@ -106,6 +93,12 @@ export default function Login() {
             </Stack>
           </Stack>
         </Box>
+        {error && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertDescription>{t("login.error")}</AlertDescription>
+          </Alert>
+        )}
       </Stack>
     </Flex>
   );

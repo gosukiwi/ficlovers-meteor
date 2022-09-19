@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import {
   FiUser,
-  FiSettings,
+  FiLogOut,
   FiMenu,
   FiEdit3,
   FiTrendingUp,
@@ -77,8 +77,7 @@ function SidebarContent({ onClose, ...rest }) {
     LinkItems = LinkItems.concat([
       { name: t("sidebar.write"), icon: FiEdit3, to: "/write" },
       { name: t("sidebar.profile"), icon: FiUser },
-      { name: t("sidebar.settings"), icon: FiSettings },
-      { name: t("sidebar.sign_out"), icon: FiUser, to: "/logout" },
+      { name: t("sidebar.sign_out"), icon: FiLogOut, to: "/logout" },
     ]);
   } else {
     LinkItems = LinkItems.concat([
