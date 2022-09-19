@@ -4,14 +4,22 @@ import { createRoot } from "react-dom/client";
 import App from "/imports/ui/App";
 import { BrowserRouter } from "react-router-dom";
 import "meteor/universe:i18n";
+// import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
 
 Meteor.startup(() => {
+  // const theme = extendTheme({
+  //   shadows: {
+  //     outline: "0 0 0 3px red",
+  //   },
+  // });
+
   const container = document.getElementById("react-target");
   const root = createRoot(container);
 
   root.render(
     <ChakraProvider>
+      {/* <ChakraProvider theme={theme}> */}
       <BrowserRouter>
         <App />
       </BrowserRouter>

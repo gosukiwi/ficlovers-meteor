@@ -2,9 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import i18n from "meteor/universe:i18n";
 import Layout from "./pages/Layout";
-import Home from "./pages/Home";
 import FicsIndex from "./pages/FicsIndex";
-import FicsNew from "./pages/FicsNew";
+import Write from "./pages/Write";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
@@ -28,8 +27,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<FicsIndex />} />
-        {/* <Route path="fics" element={<FicsIndex />} /> */}
-        <Route path="write" element={<FicsNew />} />
+        <Route path="write" element={<Write />} />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
         <Route path="*" element={<NotFound />} />
