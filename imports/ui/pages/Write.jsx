@@ -1,53 +1,21 @@
-import { Meteor } from "meteor/meteor";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
 import { useTranslator } from "/imports/ui/i18n";
-import ValidationErrors from "/imports/ui/ValidationErrors";
-import { Heading, Flex, Input, Textarea, Button } from "@chakra-ui/react";
+import { Heading, Flex, Button } from "@chakra-ui/react";
+import FicList from "/imports/ui/FicList";
+import { Link } from "react-router-dom";
 
 export default function Write() {
-  const [error, setError] = useState(null);
-  const { register, handleSubmit, reset } = useForm();
   const t = useTranslator();
 
-  const onSubmit = ({ title, description }) => {
-    Meteor.call("fics.insert", title, description, (err) => {
-      setError(<ValidationErrors error={err} />);
-    });
-  };
-
   return (
-    <Flex
-      gap="12px"
-      as="form"
-      flexDirection="column"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Heading size="xl">{t("write.write")}</Heading>
-      <div>
-        <Input
-          required
-          maxLength={50}
-          bg="white"
-          placeholder={t("write.title")}
-          focusBorderColor="cyan.400"
-          {...register("title")}
-        />
-      </div>
-      <div>
-        <Textarea
-          required
-          maxLength={500}
-          bg="white"
-          placeholder={t("write.description")}
-          focusBorderColor="cyan.400"
-          {...register("description")}
-        />
-      </div>
-      <Button colorScheme="cyan" color="white" type="submit">
-        {t("write.submit")}
+    <Flex gap="12px" flexDirection="column">
+      <Heading size="md">{t("write.work_in_progress")}</Heading>
+      <FicList />
+      <Heading size="md">{t("write.published")}</Heading>
+      <FicList />
+      <Button as={Link} to="/new" colorScheme="cyan" color="white">
+        {t("write.new")}
       </Button>
-      {error}
     </Flex>
   );
 }

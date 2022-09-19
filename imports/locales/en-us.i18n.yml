@@ -25,10 +25,13 @@ sidebar:
   sign_in: Sign In
   sign_out: Sign Out
 write:
-  write: Write New Fic
+  write: Write
   title: Title
   description: Description
   submit: Create new fic
+  work_in_progress: Work In Progress
+  published: Published
+  new: New Fic
 validation:
   title: Oops something went wrong!
   required: "{$field} is required"
