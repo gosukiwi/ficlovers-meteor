@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useParams } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useTranslator } from "/imports/ui/i18n";
 import FicsCollection from "/imports/db/FicsCollection";
 import {
@@ -63,6 +65,30 @@ export default function Editor() {
       <Heading>{fic.title}</Heading>
       <ChapterList />
       <Input mt={5} bg="white" size="lg" placeholder={t("editor.title")} />
+      <Box mt={5}>
+        <CKEditor
+          editor={ClassicEditor}
+          data="<p>Hello from CKEditor 5!</p>"
+          config={{
+            toolbar: [
+              "bold",
+              "italic",
+              "link",
+              "bulletedList",
+              "numberedList",
+              "|",
+              "blockQuote",
+              "insertTable",
+              "undo",
+              "redo",
+            ],
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            console.log({ event, editor, data });
+          }}
+        />
+      </Box>
     </Flex>
   );
 }
