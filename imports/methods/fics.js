@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import FicsCollection from "/imports/db/FicsCollection";
+import { FicsCollection } from "/imports/collections";
 
 Meteor.methods({
   "fics.insert": function (title, description) {

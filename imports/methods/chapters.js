@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import ChaptersCollection from "/imports/db/ChaptersCollection";
+import { ChaptersCollection } from "/imports/collections";
 
 Meteor.methods({
   "chapters.insert": function (title, body, ficId) {

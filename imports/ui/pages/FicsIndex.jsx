@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslator } from "/imports/ui/i18n";
-import FicsCollection from "/imports/db/FicsCollection";
+import { FicsCollection } from "/imports/collections";
 
 export default function FicsIndex() {
   const fics = useTracker(() => {

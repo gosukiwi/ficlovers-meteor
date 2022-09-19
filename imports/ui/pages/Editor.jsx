@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslator } from "/imports/ui/i18n";
 import ValidationErrors from "/imports/ui/ValidationErrors";
-import FicsCollection from "/imports/db/FicsCollection";
-import ChaptersCollection from "/imports/db/ChaptersCollection";
+import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import {
   Spacer,
   Box,
@@ -84,16 +83,23 @@ export default function Editor() {
         size="lg"
         placeholder={t("editor.title")}
       />
-      <Flex mt={3} direction="column" bg="white" p={3} borderRadius="md">
-        <Flex alignItems="center">
-          <FiChevronLeft />
-          <Box flexGrow={1}>
-            <Text textAlign="center" fontSize="xs" color="gray.500">
-              Chapter 1 of {chapters.length}
+      <Flex gap={3} mt={3} direction="column">
+        {chapters.map((chapter, index) => (
+          <Flex
+            key={chapter._id}
+            p={3}
+            borderRadius="md"
+            bg="white"
+            alignItems="center"
+          >
+            <Text textAlign="center" fontSize="xs" color="gray.500" mr={1}>
+              CHAPTER {index + 1}:
             </Text>
-          </Box>
-          <FiChevronRight />
-        </Flex>
+            <Text textAlign="center" fontSize="xs">
+              {chapter.title}
+            </Text>
+          </Flex>
+        ))}
       </Flex>
       <CKEditor
         mt={3}

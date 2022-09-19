@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Heading, Flex, Button } from "@chakra-ui/react";
 import { useTranslator } from "/imports/ui/i18n";
 import FicList from "/imports/ui/FicList";
-import FicsCollection from "/imports/db/FicsCollection";
+import { FicsCollection } from "/imports/collections";
 
 export default function Write() {
   const t = useTranslator();
