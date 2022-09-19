@@ -27,8 +27,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="fics" element={<FicsIndex />} />
+        <Route index element={<FicsIndex />} />
+        {/* <Route path="fics" element={<FicsIndex />} /> */}
         <Route path="write" element={<FicsNew />} />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />

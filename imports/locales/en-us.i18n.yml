@@ -14,3 +14,13 @@ typewritter:
   second: To read a bunch of fics!
   third: To follow your favorite authors!
   fourth: To join the fanfiction community!
+sidebar:
+  trending: Trending
+  explore: Explore
+  favorites: Favorites
+  write: Write
+  profile: Profile
+  settings: Settings
+  sign_up: Sign Up
+  sign_in: Sign In
+  sign_out: Sign Out
