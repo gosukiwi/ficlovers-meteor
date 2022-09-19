@@ -19,7 +19,10 @@ const getLang = () =>
   "en-US";
 
 export default function App() {
-  i18n.setLocale(getLang());
+  // i18n.setLocale(getLang());
+  // For now the only locale is "en-US".
+  // TODO: add spanish before launch!
+  i18n.setLocale("en-US");
 
   return (
     <Routes>

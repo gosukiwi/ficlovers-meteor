@@ -12,12 +12,12 @@ import {
   Link,
   Button,
   Heading,
-  Text,
   useColorModeValue,
   Alert,
   AlertIcon,
   AlertDescription,
 } from "@chakra-ui/react";
+import Typewriter from "../Typewriter";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -56,9 +56,7 @@ export default function Login() {
           <Heading fontSize="4xl" textAlign="center">
             {t("login.title")}
           </Heading>
-          <Text fontSize="lg" color="gray.600">
-            to start writing!
-          </Text>
+          <Typewriter />
         </Stack>
         <Box
           rounded="lg"
