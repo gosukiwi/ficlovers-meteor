@@ -23,9 +23,10 @@ export default function Write() {
       flexDirection="column"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Heading size="xl">{t("write.write")}</Heading>
+      <Heading size="xl">{t("write.new_fic")}</Heading>
       <div>
         <Input
+          size="lg"
           required
           maxLength={50}
           bg="white"
@@ -36,6 +37,7 @@ export default function Write() {
       </div>
       <div>
         <Textarea
+          size="lg"
           required
           maxLength={500}
           bg="white"
