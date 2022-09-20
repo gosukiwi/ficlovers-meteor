@@ -7,7 +7,6 @@ import ValidationErrors from "/imports/ui/ValidationErrors";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import {
   Spacer,
-  Box,
   Heading,
   Flex,
   Text,
@@ -19,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import CKEditor from "/imports/ui/CKEditor";
 
 export default function Editor() {
@@ -28,29 +26,37 @@ export default function Editor() {
   const [chapterBody, setChapterBody] = useState("");
   const [error, setError] = useState(null);
   const t = useTranslator();
+
   const fic = useTracker(() => {
     const handler = Meteor.subscribe("fics");
 
     if (!handler.ready()) return null;
 
     return FicsCollection.findOne(id);
-  });
+  }, [id]);
 
   const chapters = useTracker(() => {
     const handler = Meteor.subscribe("chapters");
 
     if (!handler.ready()) return [];
 
-    return ChaptersCollection.find({ ficId: id }).fetch();
-  });
+    const chapters = ChaptersCollection.find({ ficId: id }).fetch();
+    if (chapters.length > 0) {
+      const [currentChapter] = chapters;
+      setChapterTitle(currentChapter.title);
+      setChapterBody(currentChapter.body);
+    }
 
-  if (!fic) return null;
+    return chapters;
+  }, [id]);
 
   const saveChapter = () => {
     Meteor.call("chapters.insert", chapterTitle, chapterBody, id, (err) => {
       setError(<ValidationErrors error={err} />);
     });
   };
+
+  if (!fic) return null;
 
   return (
     <Flex direction="column">

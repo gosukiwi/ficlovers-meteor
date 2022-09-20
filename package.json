@@ -59,6 +59,7 @@
       "airbnb",
       "plugin:react/recommended",
       "plugin:meteor/recommended",
+      "plugin:react-hooks/recommended",
       "prettier"
     ],
     "parserOptions": {
@@ -73,6 +74,12 @@
       "meteor"
     ],
     "rules": {
+      "react-hooks/exhaustive-deps": [
+        "warn",
+        {
+          "additionalHooks": "useTracker|useSomeOtherHook"
+        }
+      ],
       "react/jsx-props-no-spreading": "off",
       "func-names": "off",
       "no-underscore-dangle": "off",
