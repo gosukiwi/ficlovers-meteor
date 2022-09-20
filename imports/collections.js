@@ -14,7 +14,7 @@ export const ChaptersCollection = new Mongo.Collection("chapters");
 ChaptersCollection.attachSchema(
   new SimpleSchema({
     title: { type: String, label: "Title", max: 50 },
-    body: { type: String, label: "Body", max: 500 },
+    body: { type: String, label: "Body", max: 500, optional: true },
     userId: { type: String },
     ficId: { type: String },
   })

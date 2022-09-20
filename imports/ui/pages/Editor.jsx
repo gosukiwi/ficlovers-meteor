@@ -2,10 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Link, useParams } from "react-router-dom";
 import React, { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import { useTranslator } from "/imports/ui/i18n";
-import ValidationErrors from "/imports/ui/ValidationErrors";
-import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import {
+  Box,
   Spacer,
   Heading,
   Flex,
@@ -16,9 +14,34 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import CKEditor from "/imports/ui/CKEditor";
+import EditorChapters from "/imports/ui/pages/EditorChapters";
+import { useTranslator } from "/imports/ui/i18n";
+import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import SimpleEditor from "/imports/ui/Editor";
+import ValidationErrors from "/imports/ui/ValidationErrors";
+
+function EditorBreadcrumb({ fic }) {
+  if (!fic) return null;
+
+  return (
+    <Breadcrumb fontSize="xs" separator={<ChevronRightIcon color="gray.400" />}>
+      <BreadcrumbItem>
+        <BreadcrumbLink as={Link} to="/write">
+          Write
+        </BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink>Editor</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink as={Link} to={`/fics/${fic._id}`}>
+          {fic.title}
+        </BreadcrumbLink>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  );
+}
 
 export default function Editor() {
   const { id } = useParams();
@@ -50,8 +73,9 @@ export default function Editor() {
     return chapters;
   }, [id]);
 
-  const saveChapter = () => {
-    Meteor.call("chapters.insert", chapterTitle, chapterBody, id, (err) => {
+  // TODO
+  const updateChapter = () => {
+    Meteor.call("chapter.update", currentChapter._id, (err) => {
       setError(<ValidationErrors error={err} />);
     });
   };
@@ -60,24 +84,7 @@ export default function Editor() {
 
   return (
     <Flex direction="column">
-      <Breadcrumb
-        fontSize="xs"
-        separator={<ChevronRightIcon color="gray.400" />}
-      >
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/write">
-            Write
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <BreadcrumbLink>Editor</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to={`/fics/${fic._id}`}>
-            {fic.title}
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+      <EditorBreadcrumb fic={fic} />
       <Heading mt={3}>{fic.title}</Heading>
       {error}
       <Input
@@ -89,30 +96,13 @@ export default function Editor() {
         size="lg"
         placeholder={t("editor.title")}
       />
-      <Flex gap={3} mt={3} direction="column">
-        {chapters.map((chapter, index) => (
-          <Flex
-            key={chapter._id}
-            p={3}
-            borderRadius="md"
-            bg="white"
-            alignItems="center"
-          >
-            <Text textAlign="center" fontSize="xs" color="gray.500" mr={1}>
-              CHAPTER {index + 1}:
-            </Text>
-            <Text textAlign="center" fontSize="xs">
-              {chapter.title}
-            </Text>
-          </Flex>
-        ))}
-      </Flex>
-      <CKEditor
-        mt={3}
-        placeholder={t("editor.placeholder")}
-        value={chapterBody}
-        onChange={setChapterBody}
-      />
+      <EditorChapters setError={setError} chapters={chapters} ficId={id} />
+      <Box mt={3}>
+        <SimpleEditor
+          value={chapterBody}
+          onChange={(e) => setChapterBody(e.target.value)}
+        />
+      </Box>
       <Flex>
         <Button size="sm" colorScheme="gray" mt={3}>
           Back
@@ -122,7 +112,7 @@ export default function Editor() {
           <Text>Delete</Text>
         </Button>
         <Button
-          onClick={saveChapter}
+          onClick={updateChapter}
           size="sm"
           colorScheme="cyan"
           color="white"

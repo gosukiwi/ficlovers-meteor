@@ -13,8 +13,6 @@
     "@babel/runtime": "^7.17.9",
     "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.3.2",
-    "@ckeditor/ckeditor5-build-classic": "^35.1.0",
-    "@ckeditor/ckeditor5-react": "^5.0.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "bcrypt": "^5.0.1",
@@ -25,6 +23,7 @@
     "react-hook-form": "^7.35.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.0",
+    "react-simple-wysiwyg": "^2.1.1",
     "simpl-schema": "^3.0.0",
     "typewriter-effect": "^2.19.0"
   },
