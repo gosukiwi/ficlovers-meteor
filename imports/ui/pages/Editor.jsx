@@ -45,8 +45,9 @@ function EditorBreadcrumb({ fic }) {
 
 export default function Editor() {
   const { id } = useParams();
-  const [chapterTitle, setChapterTitle] = useState("");
-  const [chapterBody, setChapterBody] = useState("");
+  // const [chapterTitle, setChapterTitle] = useState("");
+  // const [chapterBody, setChapterBody] = useState("");
+  const [currentChapter, setCurrentChapter] = useState(null);
   const [error, setError] = useState(null);
   const t = useTranslator();
 
@@ -64,23 +65,20 @@ export default function Editor() {
     if (!handler.ready()) return [];
 
     const chapters = ChaptersCollection.find({ ficId: id }).fetch();
-    if (chapters.length > 0) {
-      const [currentChapter] = chapters;
-      setChapterTitle(currentChapter.title);
-      setChapterBody(currentChapter.body);
-    }
-
+    if (chapters.length > 0) setCurrentChapter(chapters[0]);
     return chapters;
   }, [id]);
 
   // TODO
   const updateChapter = () => {
-    Meteor.call("chapter.update", currentChapter._id, (err) => {
+    Meteor.call("chapters.update", currentChapter, (err) => {
       setError(<ValidationErrors error={err} />);
     });
   };
 
   if (!fic) return null;
+  if (!currentChapter) return null;
+  // TODO: Show loading
 
   return (
     <Flex direction="column">
@@ -89,8 +87,13 @@ export default function Editor() {
       {error}
       <Input
         required
-        value={chapterTitle}
-        onChange={(e) => setChapterTitle(e.target.value)}
+        value={currentChapter.title}
+        onChange={(e) =>
+          setCurrentChapter((chapter) => ({
+            ...chapter,
+            title: e.target.value,
+          }))
+        }
         mt={3}
         bg="white"
         size="lg"
@@ -99,8 +102,13 @@ export default function Editor() {
       <EditorChapters setError={setError} chapters={chapters} ficId={id} />
       <Box mt={3}>
         <SimpleEditor
-          value={chapterBody}
-          onChange={(e) => setChapterBody(e.target.value)}
+          value={currentChapter.body}
+          onChange={(e) =>
+            setCurrentChapter((chapter) => ({
+              ...chapter,
+              body: e.target.value,
+            }))
+          }
         />
       </Box>
       <Flex>

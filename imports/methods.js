@@ -43,4 +43,25 @@ Meteor.methods({
       userId: this.userId,
     });
   },
+
+  "chapters.update": function ({ _id, title, body, ficId }) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(_id, String);
+    check(title, String);
+    check(body, String);
+    check(ficId, String);
+
+    ChaptersCollection.update(
+      { _id, userId: this.userId },
+      {
+        $set: {
+          title,
+          body,
+          ficId,
+          updatedAt: new Date(),
+        },
+      }
+    );
+  },
 });
