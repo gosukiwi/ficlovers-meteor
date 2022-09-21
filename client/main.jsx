@@ -1,13 +1,12 @@
 import React from "react";
 import { Meteor } from "meteor/meteor";
-import i18n from "meteor/universe:i18n";
 import { createRoot } from "react-dom/client";
 import App from "/imports/ui/App";
+import i18n from "/imports/ui/i18n";
 import { BrowserRouter } from "react-router-dom";
 // import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
 // locales
-import "/imports/locales/en-us.i18n.yml";
 
 // const getLang = () =>
 //   navigator.languages?.[0] ||

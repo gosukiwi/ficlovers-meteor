@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import { __ } from "/imports/ui/i18n";
 
 Meteor.methods({
   "fics.insert": function (title, description) {
@@ -40,7 +41,7 @@ Meteor.methods({
 
     const chapter = ChaptersCollection.findOne(chapterId);
     if (ChaptersCollection.find({ ficId: chapter.ficId }).count() <= 1) {
-      throw new Meteor.Error("Fic must have at least one chapter");
+      throw new Meteor.Error(__("methods.chapters.delete"));
     }
 
     ChaptersCollection.remove({

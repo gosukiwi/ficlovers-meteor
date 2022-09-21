@@ -40,3 +40,6 @@ editor:
   title: My new chapter
   placeholder: Once upon a time...
   new_chapter: My new chapter...
+methods:
+  chapters:
+    delete: Fic must have at least one chapter

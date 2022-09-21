@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+import "/imports/locales/en-us.i18n.yml";
 
 const localeContext = createContext(i18n.getLocale());
 
@@ -34,3 +35,6 @@ export function useTranslator(prefix = "") {
     [locale]
   );
 }
+
+export const { __ } = i18n;
+export default i18n;
