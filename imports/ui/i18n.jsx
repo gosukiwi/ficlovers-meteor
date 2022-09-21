@@ -1,4 +1,3 @@
-import { i18n } from "meteor/universe:i18n";
 import React, {
   createContext,
   useContext,
@@ -6,6 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+import { i18n } from "meteor/universe:i18n";
 import "/imports/locales/en-us.i18n.yml";
 
 const localeContext = createContext(i18n.getLocale());
