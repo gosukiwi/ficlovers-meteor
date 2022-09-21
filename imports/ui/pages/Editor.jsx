@@ -102,7 +102,7 @@ export default function Editor() {
       <EditorChapters setError={setError} chapters={chapters} ficId={id} />
       <Box mt={3}>
         <SimpleEditor
-          value={currentChapter.body}
+          value={currentChapter.body || ""}
           onChange={(e) =>
             setCurrentChapter((chapter) => ({
               ...chapter,
