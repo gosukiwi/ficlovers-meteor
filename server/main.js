@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import "/imports/methods";
+import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import "./publications";
 
 Meteor.startup(() => {
@@ -10,6 +11,17 @@ Meteor.startup(() => {
   if (!Accounts.findUserByUsername(USERNAME)) {
     Accounts.createUser({ username: USERNAME, password: PASSWORD });
   }
+
+  // Create indeces
+  FicsCollection.createIndex({ userId: 1 });
+  ChaptersCollection.createIndex({ ficId: 1 }, { userId: 1 });
+  // For when search is implemented
+  // See: https://www.mongodb.com/docs/manual/core/index-text/
+  // See: https://www.mongodb.com/docs/manual/reference/operator/query/text/#examples
+  // FicsCollection.createIndex(
+  //   { title: "text", description: "text" }
+  // );
+  // ChaptersCollection.createIndex({ body: 'text' });
 
   // If the Links collection is empty, add some data.
   // if (LinksCollection.find().count() === 0) {

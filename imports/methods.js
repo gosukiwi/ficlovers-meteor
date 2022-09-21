@@ -38,6 +38,11 @@ Meteor.methods({
 
     check(chapterId, String);
 
+    const chapter = ChaptersCollection.findOne(chapterId);
+    if (ChaptersCollection.find({ ficId: chapter.ficId }).count() <= 1) {
+      throw new Meteor.Error("Fic must have at least one chapter");
+    }
+
     ChaptersCollection.remove({
       _id: chapterId,
       userId: this.userId,

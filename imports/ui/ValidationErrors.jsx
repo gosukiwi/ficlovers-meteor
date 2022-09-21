@@ -27,7 +27,7 @@ export default function ValidationError({ error }) {
       );
     });
   } else if (Meteor.isDevelopment) {
-    message = error.reason;
+    message = error.reason || error.error;
   } else {
     message = null;
   }
