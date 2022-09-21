@@ -43,3 +43,4 @@ editor:
 methods:
   chapters:
     delete: Fic must have at least one chapter
+  new_chapter_title: Chapter 1

@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useTranslator } from "/imports/ui/i18n";
 import ValidationErrors from "/imports/ui/ValidationErrors";
 import { Heading, Flex, Input, Textarea, Button } from "@chakra-ui/react";
@@ -9,10 +10,13 @@ export default function Write() {
   const [error, setError] = useState(null);
   const { register, handleSubmit } = useForm();
   const t = useTranslator();
+  const navigate = useNavigate();
 
   const onSubmit = ({ title, description }) => {
-    Meteor.call("fics.insert", title, description, (err) => {
+    Meteor.call("fics.insert", title, description, (err, ficId) => {
       setError(<ValidationErrors error={err} />);
+
+      if (!err) navigate(`/editor/${ficId}`);
     });
   };
 

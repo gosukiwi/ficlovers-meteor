@@ -6,7 +6,6 @@ import i18n from "/imports/ui/i18n";
 import { BrowserRouter } from "react-router-dom";
 // import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
-// locales
 
 // const getLang = () =>
 //   navigator.languages?.[0] ||

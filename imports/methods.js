@@ -10,12 +10,16 @@ Meteor.methods({
     check(title, String);
     check(description, String);
 
-    FicsCollection.insert({
+    const ficId = FicsCollection.insert({
       title,
       description,
       createdAt: new Date(),
       userId: this.userId,
     });
+
+    Meteor.call("chapters.insert", __("methods.new_chapter_title"), "", ficId);
+
+    return ficId;
   },
 
   "chapters.insert": function (title, body, ficId) {
