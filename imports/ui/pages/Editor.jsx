@@ -45,8 +45,6 @@ function EditorBreadcrumb({ fic }) {
 
 export default function Editor() {
   const { id } = useParams();
-  // const [chapterTitle, setChapterTitle] = useState("");
-  // const [chapterBody, setChapterBody] = useState("");
   const [currentChapter, setCurrentChapter] = useState(null);
   const [error, setError] = useState(null);
   const t = useTranslator();
@@ -65,7 +63,8 @@ export default function Editor() {
     if (!handler.ready()) return [];
 
     const chapters = ChaptersCollection.find({ ficId: id }).fetch();
-    if (chapters.length > 0) setCurrentChapter(chapters[0]);
+    if (chapters.length > 0 && currentChapter === null)
+      setCurrentChapter(chapters[0]);
     return chapters;
   }, [id]);
 
@@ -99,7 +98,12 @@ export default function Editor() {
         size="lg"
         placeholder={t("editor.title")}
       />
-      <EditorChapters setError={setError} chapters={chapters} ficId={id} />
+      <EditorChapters
+        setError={setError}
+        chapters={chapters}
+        ficId={id}
+        setCurrentChapter={setCurrentChapter}
+      />
       <Box mt={3}>
         <SimpleEditor
           value={currentChapter.body || ""}

@@ -12,9 +12,14 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import { FiPlus, FiDelete } from "react-icons/fi";
+import { FiPlus, FiDelete, FiEdit } from "react-icons/fi";
 
-export default function EditorChapters({ ficId, chapters, setError }) {
+export default function EditorChapters({
+  ficId,
+  chapters,
+  setError,
+  setCurrentChapter,
+}) {
   const t = useTranslator();
   const [newChapterTitle, setNewChapterTitle] = useState("");
 
@@ -51,7 +56,15 @@ export default function EditorChapters({ ficId, chapters, setError }) {
           </Text>
           <Box
             cursor="pointer"
-            bg="red.500"
+            bg="cyan.400"
+            p={3}
+            onClick={() => setCurrentChapter(chapter)}
+          >
+            <FiEdit color="white" />
+          </Box>
+          <Box
+            cursor="pointer"
+            bg="red.400"
             p={3}
             borderTopRightRadius="md"
             borderBottomRightRadius="md"
