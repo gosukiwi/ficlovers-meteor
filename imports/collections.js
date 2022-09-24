@@ -17,5 +17,6 @@ ChaptersCollection.attachSchema(
     body: { type: String, label: "Body", max: 500, optional: true },
     userId: { type: String },
     ficId: { type: String },
+    order: { type: Number, defaultValue: 0 },
   })
 );

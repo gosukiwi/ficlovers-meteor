@@ -39,7 +39,11 @@ export default function Editor() {
 
     if (!handler.ready()) return [];
 
-    const chapters = ChaptersCollection.find({ ficId: id }).fetch();
+    const chapters = ChaptersCollection.find(
+      { ficId: id },
+      { sort: { order: 1 } }
+    ).fetch();
+
     if (chapters.length > 0 && currentChapter === null) {
       setCurrentChapter(chapters[0]);
       setInitialChapter(chapters[0]);

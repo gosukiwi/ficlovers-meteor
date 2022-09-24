@@ -197,9 +197,17 @@ export default function Chapters({
     });
   };
 
-  const moveUp = () => {};
+  const moveUp = (chapter) => {
+    Meteor.call("chapters.moveUp", chapter, (err) => {
+      setError(<ValidationErrors error={err} />);
+    });
+  };
 
-  const moveDown = () => {};
+  const moveDown = (chapter) => {
+    Meteor.call("chapters.moveDown", chapter, (err) => {
+      setError(<ValidationErrors error={err} />);
+    });
+  };
 
   return (
     <Flex gap={3} mt={3} direction="column">

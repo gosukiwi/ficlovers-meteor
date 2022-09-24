@@ -29,10 +29,17 @@ Meteor.methods({
     check(body, String);
     check(ficId, String);
 
+    const lastChapter = ChaptersCollection.findOne(
+      { ficId },
+      { sort: { order: -1 } }
+    );
+    const order = lastChapter ? lastChapter.order + 1 : 0;
+
     ChaptersCollection.insert({
       title,
       body,
       ficId,
+      order,
       createdAt: new Date(),
       userId: this.userId,
     });
@@ -69,6 +76,84 @@ Meteor.methods({
           title,
           body,
           ficId,
+          updatedAt: new Date(),
+        },
+      }
+    );
+  },
+
+  "chapters.moveUp": function ({ _id, ficId, order }) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(_id, String);
+    check(ficId, String);
+    check(order, Number);
+
+    if (order === 0) return; // nothing to do
+
+    const oldOrder = order;
+    const chapterOnTopOfThisOne = ChaptersCollection.findOne(
+      { userId: this.userId, ficId, order: { $lt: order } },
+      { sort: { order: -1 } }
+    );
+
+    if (!chapterOnTopOfThisOne) return;
+
+    const newOrder = chapterOnTopOfThisOne.order;
+
+    ChaptersCollection.update(
+      { _id: chapterOnTopOfThisOne._id, userId: this.userId },
+      {
+        $set: {
+          order: oldOrder,
+          updatedAt: new Date(),
+        },
+      }
+    );
+
+    ChaptersCollection.update(
+      { _id, userId: this.userId },
+      {
+        $set: {
+          order: newOrder,
+          updatedAt: new Date(),
+        },
+      }
+    );
+  },
+
+  "chapters.moveDown": function ({ _id, ficId, order }) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(_id, String);
+    check(ficId, String);
+    check(order, Number);
+
+    const oldOrder = order;
+    const chapterBelowThisOne = ChaptersCollection.findOne(
+      { userId: this.userId, ficId, order: { $gt: order } },
+      { sort: { order: 1 } }
+    );
+
+    if (!chapterBelowThisOne) return;
+
+    const newOrder = chapterBelowThisOne.order;
+
+    ChaptersCollection.update(
+      { _id: chapterBelowThisOne._id, userId: this.userId },
+      {
+        $set: {
+          order: oldOrder,
+          updatedAt: new Date(),
+        },
+      }
+    );
+
+    ChaptersCollection.update(
+      { _id, userId: this.userId },
+      {
+        $set: {
+          order: newOrder,
           updatedAt: new Date(),
         },
       }
