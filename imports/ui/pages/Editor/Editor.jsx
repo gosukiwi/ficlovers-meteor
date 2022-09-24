@@ -104,6 +104,7 @@ export default function Editor() {
         ficId={id}
         changeChapter={changeChapter}
         hasChanges={hasChanges}
+        current={currentChapter}
       />
       <Box mt={3}>
         <SimpleEditor

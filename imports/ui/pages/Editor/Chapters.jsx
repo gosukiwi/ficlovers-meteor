@@ -13,15 +13,9 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-import {
-  FiPlus,
-  FiDelete,
-  FiEdit,
-  FiArrowUp,
-  FiArrowDown,
-} from "react-icons/fi";
+import { FiPlus, FiX, FiEdit3, FiArrowUp, FiArrowDown } from "react-icons/fi";
 
-function ChapterListSmall({
+function ChapterListItemSmall({
   chapter,
   index,
   moveUp,
@@ -29,6 +23,7 @@ function ChapterListSmall({
   deleteChapter,
   changeChapter,
   hasChanges,
+  current,
 }) {
   const t = useTranslator();
 
@@ -44,7 +39,13 @@ function ChapterListSmall({
         <Text p={3} textAlign="center" fontSize="xs" color="gray.500">
           {index + 1}.
         </Text>
-        <Text pr={3} noOfLines={1} flexGrow={1} fontSize="xs">
+        <Text
+          as={current ? "strong" : "p"}
+          pr={3}
+          noOfLines={1}
+          flexGrow={1}
+          fontSize="xs"
+        >
           {chapter.title}
         </Text>
       </Flex>
@@ -81,7 +82,7 @@ function ChapterListSmall({
             }
           }}
         >
-          <FiEdit />
+          <FiEdit3 />
         </Box>
         <Box
           cursor="pointer"
@@ -91,14 +92,14 @@ function ChapterListSmall({
           borderBottomRightRadius="md"
           onClick={() => deleteChapter(chapter)}
         >
-          <FiDelete />
+          <FiX />
         </Box>
       </Flex>
     </Flex>
   );
 }
 
-function ChapterListRegular({
+function ChapterListItemRegular({
   chapter,
   index,
   moveUp,
@@ -106,6 +107,7 @@ function ChapterListRegular({
   deleteChapter,
   changeChapter,
   hasChanges,
+  current,
 }) {
   const t = useTranslator();
 
@@ -121,7 +123,12 @@ function ChapterListRegular({
       >
         {index + 1}.
       </Text>
-      <Text noOfLines={1} flexGrow={1} fontSize="xs">
+      <Text
+        as={current ? "strong" : "p"}
+        noOfLines={1}
+        flexGrow={1}
+        fontSize="xs"
+      >
         {chapter.title}
       </Text>
       <Box
@@ -154,17 +161,18 @@ function ChapterListRegular({
           }
         }}
       >
-        <FiEdit color="white" />
+        <FiEdit3 color="white" />
       </Box>
       <Box
         cursor="pointer"
         bg="red.400"
+        color="white"
         p={3}
         borderTopRightRadius="md"
         borderBottomRightRadius="md"
         onClick={() => deleteChapter(chapter)}
       >
-        <FiDelete color="white" />
+        <FiX />
       </Box>
     </Flex>
   );
@@ -176,6 +184,7 @@ export default function Chapters({
   setError,
   changeChapter,
   hasChanges,
+  current,
 }) {
   const t = useTranslator();
   const [newChapterTitle, setNewChapterTitle] = useState("");
@@ -213,8 +222,9 @@ export default function Chapters({
     <Flex gap={3} mt={3} direction="column">
       {chapters.map((chapter, index) =>
         isLargerThan720 ? (
-          <ChapterListRegular
+          <ChapterListItemRegular
             key={chapter._id}
+            current={current._id === chapter._id}
             chapter={chapter}
             index={index}
             moveUp={moveUp}
@@ -224,8 +234,9 @@ export default function Chapters({
             hasChanges={hasChanges}
           />
         ) : (
-          <ChapterListSmall
+          <ChapterListItemSmall
             key={chapter._id}
+            current={current._id === chapter._id}
             chapter={chapter}
             index={index}
             moveUp={moveUp}
