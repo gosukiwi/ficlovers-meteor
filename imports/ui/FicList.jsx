@@ -36,7 +36,13 @@ function Fic({ title, description, id }) {
         <Flex height="100%" alignItems="center" p={5}>
           <FiSettings />
         </Flex>
-        <Flex height="100%" alignItems="center" p={5}>
+        <Flex
+          as={Link}
+          to={`/fics/${id}`}
+          height="100%"
+          alignItems="center"
+          p={5}
+        >
           <FiChevronRight />
         </Flex>
       </Flex>

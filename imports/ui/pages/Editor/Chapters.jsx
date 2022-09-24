@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { useTranslator } from "/imports/ui/i18n";
-import ValidationErrorAlert from "/imports/ui/ValidationErrorAlert";
+import { FiPlus, FiX, FiEdit3, FiArrowUp, FiArrowDown } from "react-icons/fi";
 import {
   Box,
   Flex,
@@ -12,8 +11,8 @@ import {
   InputRightElement,
   useMediaQuery,
 } from "@chakra-ui/react";
-
-import { FiPlus, FiX, FiEdit3, FiArrowUp, FiArrowDown } from "react-icons/fi";
+import { useTranslator } from "/imports/ui/i18n";
+import ValidationErrorAlert from "/imports/ui/ValidationErrorAlert";
 
 function ChapterListItemSmall({
   chapter,
