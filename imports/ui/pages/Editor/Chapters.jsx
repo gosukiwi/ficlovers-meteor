@@ -45,6 +45,13 @@ function ChapterListItemSmall({
           noOfLines={1}
           flexGrow={1}
           fontSize="xs"
+          onClick={() => {
+            if (hasChanges) {
+              if (confirm(t("editor.unsaved"))) changeChapter(chapter);
+            } else {
+              changeChapter(chapter);
+            }
+          }}
         >
           {chapter.title}
         </Text>
@@ -68,21 +75,6 @@ function ChapterListItemSmall({
           onClick={() => moveDown(chapter)}
         >
           <FiArrowDown />
-        </Box>
-        <Box
-          cursor="pointer"
-          bg="cyan.400"
-          color="white"
-          p={3}
-          onClick={() => {
-            if (hasChanges) {
-              if (confirm(t("editor.unsaved"))) changeChapter(chapter);
-            } else {
-              changeChapter(chapter);
-            }
-          }}
-        >
-          <FiEdit3 />
         </Box>
         <Box
           cursor="pointer"
@@ -113,14 +105,7 @@ function ChapterListItemRegular({
 
   return (
     <Flex borderRadius="md" bg="white" alignItems="center">
-      <Text
-        pl={3}
-        mr={1.5}
-        textAlign="center"
-        fontSize="xs"
-        color="gray.500"
-        mr={1}
-      >
+      <Text pl={3} mr={1.5} textAlign="center" fontSize="xs" color="gray.500">
         {index + 1}.
       </Text>
       <Text
@@ -128,6 +113,13 @@ function ChapterListItemRegular({
         noOfLines={1}
         flexGrow={1}
         fontSize="xs"
+        onClick={() => {
+          if (hasChanges) {
+            if (confirm(t("editor.unsaved"))) changeChapter(chapter);
+          } else {
+            changeChapter(chapter);
+          }
+        }}
       >
         {chapter.title}
       </Text>
@@ -148,20 +140,6 @@ function ChapterListItemRegular({
         onClick={() => moveDown(chapter)}
       >
         <FiArrowDown />
-      </Box>
-      <Box
-        cursor="pointer"
-        bg="cyan.400"
-        p={3}
-        onClick={() => {
-          if (hasChanges) {
-            if (confirm(t("editor.unsaved"))) changeChapter(chapter);
-          } else {
-            changeChapter(chapter);
-          }
-        }}
-      >
-        <FiEdit3 color="white" />
       </Box>
       <Box
         cursor="pointer"
