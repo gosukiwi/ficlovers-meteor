@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Link, useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import {
   Box,
@@ -46,6 +46,8 @@ function EditorBreadcrumb({ fic }) {
 export default function Editor() {
   const { id } = useParams();
   const [currentChapter, setCurrentChapter] = useState(null);
+  const [initialChapter, setInitialChapter] = useState(null);
+  const [hasChanges, setHasChanges] = useState(false);
   const [error, setError] = useState(null);
   const t = useTranslator();
 
@@ -63,16 +65,35 @@ export default function Editor() {
     if (!handler.ready()) return [];
 
     const chapters = ChaptersCollection.find({ ficId: id }).fetch();
-    if (chapters.length > 0 && currentChapter === null)
+    if (chapters.length > 0 && currentChapter === null) {
       setCurrentChapter(chapters[0]);
+      setInitialChapter(chapters[0]);
+      setHasChanges(false);
+    }
     return chapters;
   }, [id]);
 
-  // TODO
   const updateChapter = () => {
     Meteor.call("chapters.update", currentChapter, (err) => {
       setError(<ValidationErrors error={err} />);
     });
+    setInitialChapter(currentChapter);
+    setHasChanges(false);
+  };
+
+  useEffect(() => {
+    if (currentChapter === null || initialChapter === null) return;
+
+    setHasChanges(
+      currentChapter.title !== initialChapter.title ||
+        currentChapter.body !== initialChapter.body
+    );
+  }, [initialChapter, currentChapter]);
+
+  const changeChapter = (another) => {
+    setCurrentChapter(another);
+    setInitialChapter(another);
+    setHasChanges(false);
   };
 
   if (!fic) return null;
@@ -102,7 +123,8 @@ export default function Editor() {
         setError={setError}
         chapters={chapters}
         ficId={id}
-        setCurrentChapter={setCurrentChapter}
+        changeChapter={changeChapter}
+        hasChanges={hasChanges}
       />
       <Box mt={3}>
         <SimpleEditor

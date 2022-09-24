@@ -18,7 +18,8 @@ export default function EditorChapters({
   ficId,
   chapters,
   setError,
-  setCurrentChapter,
+  changeChapter,
+  hasChanges,
 }) {
   const t = useTranslator();
   const [newChapterTitle, setNewChapterTitle] = useState("");
@@ -58,7 +59,14 @@ export default function EditorChapters({
             cursor="pointer"
             bg="cyan.400"
             p={3}
-            onClick={() => setCurrentChapter(chapter)}
+            onClick={() => {
+              if (hasChanges) {
+                if (confirm("You have unsaved changes. Are you sure?"))
+                  changeChapter(chapter);
+              } else {
+                changeChapter(chapter);
+              }
+            }}
           >
             <FiEdit color="white" />
           </Box>
