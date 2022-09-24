@@ -1,16 +1,8 @@
 import { Meteor } from "meteor/meteor";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import {
-  Box,
-  Spacer,
-  Heading,
-  Flex,
-  Text,
-  Input,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Heading, Flex, Input, Button } from "@chakra-ui/react";
 import { useTranslator } from "/imports/ui/i18n";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import SimpleEditor from "/imports/ui/Editor";
@@ -25,6 +17,7 @@ export default function Editor() {
   const [hasChanges, setHasChanges] = useState(false);
   const [error, setError] = useState(null);
   const t = useTranslator();
+  const navigate = useNavigate();
 
   const fic = useTracker(() => {
     const handler = Meteor.subscribe("fics");
@@ -117,13 +110,14 @@ export default function Editor() {
           }
         />
       </Box>
-      <Flex>
-        <Button size="sm" colorScheme="gray" mt={3}>
+      <Flex gap={3} justifyContent="flex-end">
+        <Button
+          onClick={() => navigate("/write")}
+          size="sm"
+          colorScheme="gray"
+          mt={3}
+        >
           Back
-        </Button>
-        <Spacer />
-        <Button size="sm" colorScheme="red" mt={3} mr={2}>
-          <Text>Delete</Text>
         </Button>
         <Button
           onClick={updateChapter}

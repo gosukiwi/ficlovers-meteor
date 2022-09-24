@@ -3,11 +3,11 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test": "cross-env TEST_WATCH=1 meteor test --driver-package meteortesting:mocha",
+    "test-old": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "cross-env TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
-    "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@babel/runtime": "^7.17.9",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/eslint-parser": "^7.19.1",
+    "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
     "eslint-config-airbnb": "^19.0.4",
@@ -44,6 +45,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-meteor": "^7.3.0",
+    "eslint-plugin-mocha": "^10.1.0",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "2.7.1"
@@ -59,6 +61,7 @@
       "plugin:react/recommended",
       "plugin:meteor/recommended",
       "plugin:react-hooks/recommended",
+      "plugin:mocha/recommended",
       "prettier"
     ],
     "parserOptions": {
@@ -70,9 +73,12 @@
     },
     "plugins": [
       "react",
-      "meteor"
+      "meteor",
+      "mocha"
     ],
     "rules": {
+      "prefer-arrow-callback": 0,
+      "mocha/prefer-arrow-callback": 2,
       "react-hooks/exhaustive-deps": [
         "warn",
         {

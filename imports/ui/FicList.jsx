@@ -46,13 +46,13 @@ function Fic({ title, description, id }) {
 
 export default function FicList({ fics }) {
   return (
-    <Flex flexDirection="column">
-      {fics.map((f) => (
+    <Flex gap={3} flexDirection="column">
+      {fics.map((fic) => (
         <Fic
-          key={f._id}
-          id={f._id}
-          title={f.title}
-          description={f.description}
+          key={fic._id}
+          id={fic._id}
+          title={fic.title}
+          description={fic.description}
         />
       ))}
     </Flex>
