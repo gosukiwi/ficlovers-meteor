@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import NewFic from "./pages/NewFic";
-import Editor from "./pages/Editor";
+import Editor from "./pages/Editor/Editor";
 
 export default function App() {
   return (

@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import {
@@ -10,38 +10,13 @@ import {
   Text,
   Input,
   Button,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
 } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import EditorChapters from "/imports/ui/pages/EditorChapters";
 import { useTranslator } from "/imports/ui/i18n";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import SimpleEditor from "/imports/ui/Editor";
 import ValidationErrors from "/imports/ui/ValidationErrors";
-
-function EditorBreadcrumb({ fic }) {
-  if (!fic) return null;
-
-  return (
-    <Breadcrumb fontSize="xs" separator={<ChevronRightIcon color="gray.400" />}>
-      <BreadcrumbItem>
-        <BreadcrumbLink as={Link} to="/write">
-          Write
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-      <BreadcrumbItem>
-        <BreadcrumbLink>Editor</BreadcrumbLink>
-      </BreadcrumbItem>
-      <BreadcrumbItem>
-        <BreadcrumbLink as={Link} to={`/fics/${fic._id}`}>
-          {fic.title}
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-    </Breadcrumb>
-  );
-}
+import Breadcrumb from "/imports/ui/pages/Editor/Breadcrumb";
+import Chapters from "/imports/ui/pages/Editor/Chapters";
 
 export default function Editor() {
   const { id } = useParams();
@@ -102,7 +77,7 @@ export default function Editor() {
 
   return (
     <Flex direction="column">
-      <EditorBreadcrumb fic={fic} />
+      <Breadcrumb fic={fic} />
       <Heading mt={3}>{fic.title}</Heading>
       {error}
       <Input
@@ -119,7 +94,7 @@ export default function Editor() {
         size="lg"
         placeholder={t("editor.title")}
       />
-      <EditorChapters
+      <Chapters
         setError={setError}
         chapters={chapters}
         ficId={id}

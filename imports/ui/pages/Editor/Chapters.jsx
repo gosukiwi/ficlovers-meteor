@@ -61,8 +61,7 @@ export default function EditorChapters({
             p={3}
             onClick={() => {
               if (hasChanges) {
-                if (confirm("You have unsaved changes. Are you sure?"))
-                  changeChapter(chapter);
+                if (confirm(t("editor.unsaved"))) changeChapter(chapter);
               } else {
                 changeChapter(chapter);
               }
