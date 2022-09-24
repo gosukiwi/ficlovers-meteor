@@ -9,7 +9,7 @@ export default function Fic() {
   const { id } = useParams();
   const [currentChapter, setCurrentChapter] = useState(null);
   const fic = useTracker(() => {
-    const handler = Meteor.subscribe("fics.show", id);
+    const handler = Meteor.subscribe("fics.byId", id);
 
     if (!handler.ready()) return null;
 
@@ -17,7 +17,7 @@ export default function Fic() {
   }, [id]);
 
   const chapters = useTracker(() => {
-    const handler = Meteor.subscribe("chapters.show", id);
+    const handler = Meteor.subscribe("chapters.byId", id);
 
     if (!handler.ready()) return [];
 

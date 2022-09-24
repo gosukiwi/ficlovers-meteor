@@ -11,7 +11,7 @@ export default function Write() {
   const t = useTranslator();
   const user = useTracker(() => Meteor.user());
   const fics = useTracker(() => {
-    const handler = Meteor.subscribe("fics.user");
+    const handler = Meteor.subscribe("user.fics");
 
     if (!handler.ready()) return [];
 
