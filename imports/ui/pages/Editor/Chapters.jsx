@@ -45,6 +45,7 @@ function ChapterListItemSmall({
           noOfLines={1}
           flexGrow={1}
           fontSize="xs"
+          cursor="pointer"
           onClick={() => {
             if (hasChanges) {
               if (confirm(t("editor.unsaved"))) changeChapter(chapter);
@@ -113,6 +114,7 @@ function ChapterListItemRegular({
         noOfLines={1}
         flexGrow={1}
         fontSize="xs"
+        cursor="pointer"
         onClick={() => {
           if (hasChanges) {
             if (confirm(t("editor.unsaved"))) changeChapter(chapter);

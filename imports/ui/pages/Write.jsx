@@ -11,21 +11,25 @@ export default function Write() {
   const t = useTranslator();
   const user = useTracker(() => Meteor.user());
   const fics = useTracker(() => {
-    const handler = Meteor.subscribe("fics");
+    const handler = Meteor.subscribe("fics.user");
 
     if (!handler.ready()) return [];
 
     return FicsCollection.find({ userId: user._id }).fetch();
   });
 
+  const wip = fics.filter((f) => f.status === "wip");
+  const published = fics.filter((f) => f.status === "published");
+  const finished = fics.filter((f) => f.status === "finished");
+
   return (
     <Flex gap="12px" flexDirection="column">
       <Heading size="md">{t("write.work_in_progress")}</Heading>
-      <FicList fics={fics} />
+      <FicList fics={wip} />
       <Heading size="md">{t("write.published")}</Heading>
-      <FicList fics={[]} />
+      <FicList fics={published} />
       <Heading size="md">{t("write.finished")}</Heading>
-      <FicList fics={[]} />
+      <FicList fics={finished} />
       <Button as={Link} to="/new" colorScheme="cyan" color="white">
         {t("write.new")}
       </Button>

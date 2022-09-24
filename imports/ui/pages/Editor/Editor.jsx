@@ -21,7 +21,7 @@ export default function Editor() {
   const navigate = useNavigate();
 
   const fic = useTracker(() => {
-    const handler = Meteor.subscribe("fics");
+    const handler = Meteor.subscribe("fics.user");
 
     if (!handler.ready()) return null;
 
@@ -29,7 +29,7 @@ export default function Editor() {
   }, [id]);
 
   const chapters = useTracker(() => {
-    const handler = Meteor.subscribe("chapters");
+    const handler = Meteor.subscribe("chapters.user");
 
     if (!handler.ready()) return [];
 
