@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link as RRLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { Box, Heading, Flex, Input, Button } from "@chakra-ui/react";
@@ -143,6 +143,18 @@ export default function Editor() {
         >
           Back
         </Button>
+        <Button
+          as={RRLink}
+          to={`/fics/${id}`}
+          _hover={{
+            backgroundColor: "gray.300",
+          }}
+          size="sm"
+          bg="gray.200"
+          mt={3}
+        >
+          {t("editor.preview")}
+        </Button>
         {fic.status === "published" ? (
           <Button
             onClick={draftFic}
@@ -173,7 +185,7 @@ export default function Editor() {
           bg="gray.200"
           mt={3}
         >
-          Save
+          {t("editor.save")}
         </Button>
       </Flex>
     </Flex>

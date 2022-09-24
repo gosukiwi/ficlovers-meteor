@@ -45,6 +45,8 @@ editor:
   setted_as_wip: Your fic is now a WIP again!
   publish: Publish
   wip: Back to WIP
+  save: Save
+  preview: Preview
 methods:
   chapters:
     delete: Fic must have at least one chapter

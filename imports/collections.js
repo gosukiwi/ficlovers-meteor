@@ -20,6 +20,8 @@ FicsCollection.attachSchema(
       custom: inEnum("wip", "published", "finished"),
       defaultValue: "wip",
     },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
   })
 );
 
@@ -27,9 +29,11 @@ export const ChaptersCollection = new Mongo.Collection("chapters");
 ChaptersCollection.attachSchema(
   new SimpleSchema({
     title: { type: String, label: "Title", max: 50 },
-    body: { type: String, label: "Body", max: 500, optional: true },
+    body: { type: String, label: "Body", max: 50000, optional: true },
     userId: { type: String },
     ficId: { type: String },
     order: { type: Number, defaultValue: 0 },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
   })
 );

@@ -14,6 +14,7 @@ Meteor.methods({
       title,
       description,
       createdAt: new Date(),
+      updatedAt: new Date(),
       userId: this.userId,
     });
 
@@ -67,6 +68,7 @@ Meteor.methods({
       ficId,
       order,
       createdAt: new Date(),
+      updatedAt: new Date(),
       userId: this.userId,
     });
   },

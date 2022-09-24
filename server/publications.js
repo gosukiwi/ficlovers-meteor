@@ -41,3 +41,9 @@ Meteor.publish("chapters.byId", function (ficId) {
 
   return ChaptersCollection.find({ ficId });
 });
+
+Meteor.publish("users.byId", function (_id) {
+  check(_id, String);
+
+  return Meteor.users.find(_id);
+});
