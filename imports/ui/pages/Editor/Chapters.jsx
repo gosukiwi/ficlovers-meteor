@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useTranslator } from "/imports/ui/i18n";
-import ValidationErrors from "/imports/ui/ValidationErrors";
+import ValidationErrorAlert from "/imports/ui/ValidationErrorAlert";
 import {
   Box,
   Flex,
@@ -174,25 +174,25 @@ export default function Chapters({
 
     Meteor.call("chapters.insert", newChapterTitle, "", ficId, (err) => {
       setNewChapterTitle("");
-      setError(<ValidationErrors error={err} />);
+      setError(<ValidationErrorAlert error={err} />);
     });
   };
 
   const deleteChapter = (chapter) => {
     Meteor.call("chapters.delete", chapter._id, (err) => {
-      setError(<ValidationErrors error={err} />);
+      setError(<ValidationErrorAlert error={err} />);
     });
   };
 
   const moveUp = (chapter) => {
     Meteor.call("chapters.moveUp", chapter, (err) => {
-      setError(<ValidationErrors error={err} />);
+      setError(<ValidationErrorAlert error={err} />);
     });
   };
 
   const moveDown = (chapter) => {
     Meteor.call("chapters.moveDown", chapter, (err) => {
-      setError(<ValidationErrors error={err} />);
+      setError(<ValidationErrorAlert error={err} />);
     });
   };
 

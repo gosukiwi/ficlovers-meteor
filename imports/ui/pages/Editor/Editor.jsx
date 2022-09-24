@@ -6,7 +6,8 @@ import { Box, Heading, Flex, Input, Button } from "@chakra-ui/react";
 import { useTranslator } from "/imports/ui/i18n";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import SimpleEditor from "/imports/ui/Editor";
-import ValidationErrors from "/imports/ui/ValidationErrors";
+import ValidationErrorAlert from "/imports/ui/ValidationErrorAlert";
+import SuccessAlert from "/imports/ui/SuccessAlert";
 import Breadcrumb from "/imports/ui/pages/Editor/Breadcrumb";
 import Chapters from "/imports/ui/pages/Editor/Chapters";
 
@@ -15,7 +16,7 @@ export default function Editor() {
   const [currentChapter, setCurrentChapter] = useState(null);
   const [initialChapter, setInitialChapter] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
-  const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(null);
   const t = useTranslator();
   const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ export default function Editor() {
 
   const updateChapter = () => {
     Meteor.call("chapters.update", currentChapter, (err) => {
-      setError(<ValidationErrors error={err} />);
+      setAlert(<ValidationErrorAlert error={err} />);
     });
     setInitialChapter(currentChapter);
     setHasChanges(false);
@@ -68,6 +69,26 @@ export default function Editor() {
     setHasChanges(false);
   };
 
+  const publishFic = () => {
+    Meteor.call("fics.publish", id, (err) => {
+      if (err) {
+        setAlert(<ValidationErrorAlert error={err} />);
+      } else {
+        setAlert(<SuccessAlert title={t("editor.published")} />);
+      }
+    });
+  };
+
+  const draftFic = () => {
+    Meteor.call("fics.wip", id, (err) => {
+      if (err) {
+        setAlert(<ValidationErrorAlert error={err} />);
+      } else {
+        setAlert(<SuccessAlert title={t("editor.setted_as_wip")} />);
+      }
+    });
+  };
+
   if (!fic) return null;
   if (!currentChapter) return null;
   // TODO: Show loading
@@ -76,7 +97,7 @@ export default function Editor() {
     <Flex direction="column">
       <Breadcrumb fic={fic} />
       <Heading mt={3}>{fic.title}</Heading>
-      {error}
+      {alert}
       <Input
         required
         value={currentChapter.title}
@@ -92,7 +113,7 @@ export default function Editor() {
         placeholder={t("editor.title")}
       />
       <Chapters
-        setError={setError}
+        setError={setAlert}
         chapters={chapters}
         ficId={id}
         changeChapter={changeChapter}
@@ -114,16 +135,42 @@ export default function Editor() {
         <Button
           onClick={() => navigate("/write")}
           size="sm"
-          colorScheme="gray"
+          bg="gray.200"
+          _hover={{
+            backgroundColor: "gray.300",
+          }}
           mt={3}
         >
           Back
         </Button>
+        {fic.status === "published" ? (
+          <Button
+            onClick={draftFic}
+            size="sm"
+            colorScheme="cyan"
+            color="white"
+            mt={3}
+          >
+            {t("editor.wip")}
+          </Button>
+        ) : (
+          <Button
+            onClick={publishFic}
+            size="sm"
+            colorScheme="cyan"
+            color="white"
+            mt={3}
+          >
+            {t("editor.publish")}
+          </Button>
+        )}
         <Button
           onClick={updateChapter}
+          _hover={{
+            backgroundColor: "gray.300",
+          }}
           size="sm"
-          colorScheme="cyan"
-          color="white"
+          bg="gray.200"
           mt={3}
         >
           Save

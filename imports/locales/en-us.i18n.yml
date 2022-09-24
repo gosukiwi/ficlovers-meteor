@@ -41,6 +41,10 @@ editor:
   placeholder: Once upon a time...
   new_chapter: My new chapter...
   unsaved: You have unsaved changes. Are you sure?
+  published: Your fic has been published!
+  setted_as_wip: Your fic is now a WIP again!
+  publish: Publish
+  wip: Back to WIP
 methods:
   chapters:
     delete: Fic must have at least one chapter

@@ -18,5 +18,16 @@ if (Meteor.isServer) {
       const fic = FicsCollection.findOne(id);
       expect(fic.status).to.eq("wip");
     });
+
+    it("complains on invalid status", function () {
+      expect(() =>
+        FicsCollection.insert({
+          title: "Test Task",
+          description: new Date(),
+          userId: 1,
+          status: "potato",
+        })
+      ).to.throw(/must be in/);
+    });
   });
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useTranslator } from "/imports/ui/i18n";
-import ValidationErrors from "/imports/ui/ValidationErrors";
+import ValidationErrorAlert from "/imports/ui/ValidationErrorAlert";
 import { Heading, Flex, Input, Textarea, Button } from "@chakra-ui/react";
 
 export default function Write() {
@@ -14,7 +14,7 @@ export default function Write() {
 
   const onSubmit = ({ title, description }) => {
     Meteor.call("fics.insert", title, description, (err, ficId) => {
-      setError(<ValidationErrors error={err} />);
+      setError(<ValidationErrorAlert error={err} />);
 
       if (!err) navigate(`/editor/${ficId}`);
     });

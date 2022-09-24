@@ -14,7 +14,12 @@ Meteor.startup(() => {
 
   // Create indeces
   FicsCollection.createIndex({ userId: 1 });
-  ChaptersCollection.createIndex({ ficId: 1 }, { userId: 1 }, { order: 1 });
+  ChaptersCollection.createIndex(
+    { ficId: 1 },
+    { userId: 1 },
+    { order: 1 },
+    { status: 1 }
+  );
   // For when search is implemented
   // See: https://www.mongodb.com/docs/manual/core/index-text/
   // See: https://www.mongodb.com/docs/manual/reference/operator/query/text/#examples

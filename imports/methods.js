@@ -22,6 +22,32 @@ Meteor.methods({
     return ficId;
   },
 
+  "fics.publish": function (id) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(id, String);
+
+    FicsCollection.update(id, {
+      $set: {
+        status: "published",
+        updatedAt: new Date(),
+      },
+    });
+  },
+
+  "fics.wip": function (id) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(id, String);
+
+    FicsCollection.update(id, {
+      $set: {
+        status: "wip",
+        updatedAt: new Date(),
+      },
+    });
+  },
+
   "chapters.insert": function (title, body, ficId) {
     if (!this.userId) throw new Meteor.Error("Not authorized.");
 
