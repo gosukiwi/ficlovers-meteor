@@ -13,6 +13,7 @@ export const LANGUAGES = ["English", "Spanish", "Other"];
 
 export const TagsCollection = new Mongo.Collection("tags");
 const tagsSchema = new SimpleSchema({
+  _id: { type: String },
   name: { type: String, label: "Name", max: 15 },
   count: { type: Number, defaultValue: 0 },
 });
@@ -21,6 +22,7 @@ TagsCollection.attachSchema(tagsSchema);
 export const FicsCollection = new Mongo.Collection("fics");
 FicsCollection.attachSchema(
   new SimpleSchema({
+    _id: { type: String },
     title: { type: String, label: "Title", max: 50 },
     description: { type: String, label: "Description", max: 500 },
     userId: { type: String },
@@ -31,7 +33,7 @@ FicsCollection.attachSchema(
     },
     tags: { type: Array, label: "Tags", defaultValue: [] },
     "tags.$": tagsSchema,
-    disclaimer: { type: String, label: "Disclaimer", max: 500 },
+    disclaimer: { type: String, label: "Disclaimer", max: 500, optional: true },
     crossover: { type: Boolean, label: "Crossover", defaultValue: false },
     nsfw: { type: Boolean, label: "NSFW", defaultValue: false },
     language: {
@@ -47,6 +49,7 @@ FicsCollection.attachSchema(
 export const ChaptersCollection = new Mongo.Collection("chapters");
 ChaptersCollection.attachSchema(
   new SimpleSchema({
+    _id: { type: String },
     title: { type: String, label: "Title", max: 50 },
     body: { type: String, label: "Body", max: 50000, optional: true },
     userId: { type: String },

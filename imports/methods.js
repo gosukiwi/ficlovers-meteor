@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { check } from "meteor/check";
+import { check, Match } from "meteor/check";
 import {
   FicsCollection,
   ChaptersCollection,
@@ -69,7 +69,7 @@ Meteor.methods({
     check(title, String);
     check(description, String);
     check(tags, Array);
-    check(disclaimer, String);
+    check(disclaimer, Match.Maybe(String));
     check(language, String);
     check(nsfw, Boolean);
     check(crossover, Boolean);

@@ -11,10 +11,10 @@ import {
   HStack,
   Image,
   Button,
-  Box,
 } from "@chakra-ui/react";
 import { FiEdit3 } from "react-icons/fi";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import Tag from "/imports/ui/Tag";
 
 export default function Fic() {
   const { id, chapterId } = useParams();
@@ -91,20 +91,9 @@ export default function Fic() {
           <Text>—</Text>
           <Text>{fic.createdAt.toLocaleDateString()}</Text>
         </HStack>
-        <Flex mt={3} gap={2}>
+        <Flex flexWrap="wrap" mt={3} gap={2}>
           {fic.tags.map((tag) => (
-            <Box
-              key={tag._id}
-              borderRadius="md"
-              px={3}
-              py={1}
-              bg="cyan.400"
-              color="white"
-              cursor="pointer"
-              _hover={{ bg: "cyan.500", color: "white" }}
-            >
-              {tag.name}
-            </Box>
+            <Tag key={tag._id} name={tag.name} />
           ))}
         </Flex>
       </Flex>
