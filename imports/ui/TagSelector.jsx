@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import { Flex, Input, Text, Box, Heading } from "@chakra-ui/react";
+import { Flex, Input, Box, Text } from "@chakra-ui/react";
 import { FiX } from "react-icons/fi";
 import { TagsCollection } from "/imports/collections";
 
@@ -9,6 +9,8 @@ export default function TagSelector() {
   const [tagSearch, setTagSearch] = useState("");
   const [showMatches, setShowMatches] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [hasFocus, setHasFocus] = useState(false);
+  const inputRef = useRef(null);
 
   const tags = useTracker(() => {
     if (tagSearch === "") return [];
@@ -59,6 +61,10 @@ export default function TagSelector() {
     setTagSearch("");
   };
 
+  const focusInput = () => {
+    if (!hasFocus) inputRef.current.focus();
+  };
+
   return (
     <Flex
       as="form"
@@ -71,8 +77,10 @@ export default function TagSelector() {
       bg="white"
       position="relative"
       alignItems="center"
+      boxShadow={hasFocus ? "outline" : "none"}
+      onClick={focusInput}
     >
-      <Flex gap={2} color="black" fontSize="sm">
+      <Flex flexWrap="wrap" gap={2} color="black" fontSize="sm">
         {selectedTags.map((tag) => (
           <Flex
             key={tag}
@@ -85,20 +93,29 @@ export default function TagSelector() {
             gap={2}
             _hover={{ bg: "cyan.500" }}
           >
-            {tag}
+            <Text noOfLines={1}>{tag}</Text>
             <FiX cursor="pointer" onClick={() => removeTag(tag)} />
           </Flex>
         ))}
+
+        <Input
+          ref={inputRef}
+          value={tagSearch}
+          onChange={handleTagSearchChanged}
+          onKeyDown={handleTagSearchKeyDown}
+          border="none"
+          _focus={{ boxShadow: "none" }}
+          color="black"
+          width={100}
+          height="auto"
+          p={0}
+          onBlur={() => {
+            setTimeout(() => setShowMatches(false), 200);
+            setHasFocus(false);
+          }}
+          onFocus={() => setHasFocus(true)}
+        />
       </Flex>
-      <Input
-        value={tagSearch}
-        onChange={handleTagSearchChanged}
-        onKeyDown={handleTagSearchKeyDown}
-        border="none"
-        _focus={{ boxShadow: "none" }}
-        color="black"
-        onBlur={() => setTimeout(() => setShowMatches(false), 200)}
-      />
       {showMatches && tags.length > 0 && (
         <Box
           width="100%"
