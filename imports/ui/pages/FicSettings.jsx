@@ -111,6 +111,7 @@ export default function FicSettings() {
       <FormControl>
         <FormLabel>{t("fic_settings.crossover")}</FormLabel>
         <Switch
+          colorScheme="cyan"
           isChecked={isCrossover}
           onChange={() => setIsCrossover(!isCrossover)}
         />
@@ -118,7 +119,11 @@ export default function FicSettings() {
 
       <FormControl>
         <FormLabel>{t("fic_settings.nsfw")}</FormLabel>
-        <Switch isChecked={isNSFW} onChange={() => setIsNSFW(!isNSFW)} />
+        <Switch
+          colorScheme="cyan"
+          isChecked={isNSFW}
+          onChange={() => setIsNSFW(!isNSFW)}
+        />
       </FormControl>
 
       <FormControl>

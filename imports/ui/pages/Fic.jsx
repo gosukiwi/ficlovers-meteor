@@ -11,6 +11,7 @@ import {
   HStack,
   Image,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { FiEdit3 } from "react-icons/fi";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
@@ -71,7 +72,7 @@ export default function Fic() {
   return (
     <Flex direction="column">
       <Heading mb={3}>{fic.title}</Heading>
-      <Flex mb={3}>
+      <Flex direction="column" mb={3}>
         <HStack marginTop="2" spacing="2" display="flex" alignItems="center">
           <Image
             borderRadius="full"
@@ -90,6 +91,22 @@ export default function Fic() {
           <Text>—</Text>
           <Text>{fic.createdAt.toLocaleDateString()}</Text>
         </HStack>
+        <Flex mt={3} gap={2}>
+          {fic.tags.map((tag) => (
+            <Box
+              key={tag._id}
+              borderRadius="md"
+              px={3}
+              py={1}
+              bg="cyan.400"
+              color="white"
+              cursor="pointer"
+              _hover={{ bg: "cyan.500", color: "white" }}
+            >
+              {tag.name}
+            </Box>
+          ))}
+        </Flex>
       </Flex>
       <Text dangerouslySetInnerHTML={{ __html: currentChapter.body }} />
       <Flex
