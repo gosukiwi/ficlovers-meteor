@@ -9,6 +9,7 @@ import Logout from "./pages/Logout";
 import NewFic from "./pages/NewFic";
 import Editor from "./pages/Editor/Editor";
 import Fic from "./pages/Fic";
+import FicSettings from "./pages/FicSettings";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="editor/:id" element={<Editor />} />
         <Route path="fics/:id" element={<Fic />} />
         <Route path="fics/:id/:chapterId" element={<Fic />} />
+        <Route path="fics/settings/:id" element={<FicSettings />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

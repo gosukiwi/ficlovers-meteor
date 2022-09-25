@@ -1,6 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import {
+  FicsCollection,
+  ChaptersCollection,
+  TagsCollection,
+} from "/imports/collections";
 import { __ } from "/imports/ui/i18n";
 
 Meteor.methods({
@@ -186,5 +190,22 @@ Meteor.methods({
         },
       }
     );
+  },
+
+  "tags.insert": function (name) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(name, String);
+
+    // Find if it exists
+    const tag = TagsCollection.findOne({ name });
+    if (tag) {
+      // TagsCollection.update(tag._id, {
+      //   $inc: { count: 1 },
+      // });
+      return;
+    }
+
+    TagsCollection.insert({ name, count: 1 });
   },
 });

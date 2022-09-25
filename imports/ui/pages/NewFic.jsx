@@ -28,28 +28,24 @@ export default function Write() {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Heading size="xl">{t("write.new_fic")}</Heading>
-      <div>
-        <Input
-          size="lg"
-          required
-          maxLength={50}
-          bg="white"
-          placeholder={t("write.title")}
-          focusBorderColor="cyan.400"
-          {...register("title")}
-        />
-      </div>
-      <div>
-        <Textarea
-          size="lg"
-          required
-          maxLength={500}
-          bg="white"
-          placeholder={t("write.description")}
-          focusBorderColor="cyan.400"
-          {...register("description")}
-        />
-      </div>
+      <Input
+        size="lg"
+        required
+        maxLength={50}
+        bg="white"
+        placeholder={t("write.title")}
+        focusBorderColor="cyan.400"
+        {...register("title")}
+      />
+      <Textarea
+        size="lg"
+        required
+        maxLength={500}
+        bg="white"
+        placeholder={t("write.description")}
+        focusBorderColor="cyan.400"
+        {...register("description")}
+      />
       <Button colorScheme="cyan" color="white" type="submit">
         {t("write.submit")}
       </Button>

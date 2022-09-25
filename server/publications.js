@@ -1,6 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import {
+  FicsCollection,
+  ChaptersCollection,
+  TagsCollection,
+} from "/imports/collections";
 
 Meteor.publish("user.fics.byId", function (id) {
   check(id, String);
@@ -46,4 +50,15 @@ Meteor.publish("users.byId", function (_id) {
   check(_id, String);
 
   return Meteor.users.find(_id);
+});
+
+Meteor.publish("tags.byName", function (name) {
+  check(name, String);
+
+  return TagsCollection.find(
+    {
+      name: { $regex: new RegExp(`^${name}`), $options: "i" },
+    },
+    { limit: 5 }
+  );
 });

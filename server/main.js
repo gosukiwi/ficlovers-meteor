@@ -1,7 +1,11 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import "/imports/methods";
-import { FicsCollection, ChaptersCollection } from "/imports/collections";
+import {
+  FicsCollection,
+  ChaptersCollection,
+  TagsCollection,
+} from "/imports/collections";
 import "./publications";
 
 Meteor.startup(() => {
@@ -20,6 +24,7 @@ Meteor.startup(() => {
     { order: 1 },
     { status: 1 }
   );
+  TagsCollection.createIndex({ name: 1 });
   // For when search is implemented
   // See: https://www.mongodb.com/docs/manual/core/index-text/
   // See: https://www.mongodb.com/docs/manual/reference/operator/query/text/#examples

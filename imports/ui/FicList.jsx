@@ -33,7 +33,13 @@ function Fic({ title, description, id }) {
         >
           <FiEdit3 />
         </Flex>
-        <Flex height="100%" alignItems="center" p={5}>
+        <Flex
+          as={Link}
+          to={`/fics/settings/${id}`}
+          height="100%"
+          alignItems="center"
+          p={5}
+        >
           <FiSettings />
         </Flex>
         <Flex

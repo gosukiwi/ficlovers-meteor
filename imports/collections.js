@@ -37,3 +37,11 @@ ChaptersCollection.attachSchema(
     updatedAt: { type: Date },
   })
 );
+
+export const TagsCollection = new Mongo.Collection("tags");
+ChaptersCollection.attachSchema(
+  new SimpleSchema({
+    name: { type: String, label: "Name", max: 15 },
+    count: { type: Number, defaultValue: 0 },
+  })
+);
