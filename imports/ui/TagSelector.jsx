@@ -5,10 +5,9 @@ import { Flex, Input, Box, Text } from "@chakra-ui/react";
 import { FiX } from "react-icons/fi";
 import { TagsCollection } from "/imports/collections";
 
-export default function TagSelector() {
+export default function TagSelector({ value, onChange, max }) {
   const [tagSearch, setTagSearch] = useState("");
   const [showMatches, setShowMatches] = useState(false);
-  const [selectedTags, setSelectedTags] = useState([]);
   const [hasFocus, setHasFocus] = useState(false);
   const inputRef = useRef(null);
 
@@ -29,36 +28,33 @@ export default function TagSelector() {
   };
 
   const removeTag = (tag) => {
-    setSelectedTags(selectedTags.filter((t) => t !== tag));
+    onChange(value.filter((t) => t !== tag));
+  };
+
+  const addTag = (tag) => {
+    setTagSearch("");
+    if (value.includes(tag)) return;
+    if (max && value.length >= max) return;
+
+    onChange([...value, tag]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (selectedTags.includes(tagSearch)) {
-      setTagSearch("");
-      return;
-    }
+    if (value.includes(tagSearch)) return;
 
     Meteor.call("tags.insert", tagSearch, (err) => {
       if (err) removeTag(tagSearch);
     });
 
-    setTagSearch("");
-    setSelectedTags([...selectedTags, tagSearch]);
+    addTag(tagSearch);
   };
 
   const handleTagSearchKeyDown = (e) => {
-    if (e.key === "Backspace" && tagSearch === "" && selectedTags.length > 0) {
-      removeTag(selectedTags[selectedTags.length - 1]);
+    if (e.key === "Backspace" && tagSearch === "" && value.length > 0) {
+      removeTag(value[value.length - 1]);
     }
-  };
-
-  const addTag = (tag) => {
-    if (selectedTags.includes(tag)) return;
-
-    setSelectedTags([...selectedTags, tag]);
-    setTagSearch("");
   };
 
   const focusInput = () => {
@@ -73,8 +69,7 @@ export default function TagSelector() {
       borderRadius="md"
       border="1px"
       color="gray.200"
-      px={3}
-      py={1}
+      p={2}
       bg="white"
       position="relative"
       alignItems="flex-start"
@@ -83,7 +78,7 @@ export default function TagSelector() {
       onClick={focusInput}
     >
       <Flex flexWrap="wrap" gap={2} color="black" fontSize="sm">
-        {selectedTags.map((tag) => (
+        {value.map((tag) => (
           <Flex
             key={tag}
             bg="cyan.400"

@@ -22,6 +22,7 @@ export default function FicSettings() {
   const t = useTranslator();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState([]);
   const fic = useTracker(() => {
     const handler = Meteor.subscribe("user.fics.byId", id);
 
@@ -62,7 +63,7 @@ export default function FicSettings() {
       </FormControl>
       <FormControl variant="floating">
         <FormLabel>{t("fic_settings.tags")}</FormLabel>
-        <TagSelector />
+        <TagSelector value={tags} onChange={setTags} />
       </FormControl>
     </Flex>
   );
