@@ -11,9 +11,14 @@ import "./publications";
 Meteor.startup(() => {
   const USERNAME = process.env.FICLOVERS_SEED_USER_USERNAME;
   const PASSWORD = process.env.FICLOVERS_SEED_USER_PASSWORD;
+  const EMAIL = process.env.FICLOVERS_SEED_USER_EMAIL;
 
   if (!Accounts.findUserByUsername(USERNAME)) {
-    Accounts.createUser({ username: USERNAME, password: PASSWORD });
+    Accounts.createUser({
+      username: USERNAME,
+      password: PASSWORD,
+      email: EMAIL,
+    });
   }
 
   // Create indeces

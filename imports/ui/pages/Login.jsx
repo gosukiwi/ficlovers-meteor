@@ -1,9 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RRLink } from "react-router-dom";
 import { useTranslator } from "/imports/ui/i18n";
 import {
   Flex,
+  Text,
   Box,
   FormControl,
   FormLabel,
@@ -72,7 +73,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
-            <Stack spacing={10}>
+            <Stack spacing={3}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
                 align="start"
@@ -92,6 +93,18 @@ export default function Login() {
               </Button>
             </Stack>
           </Stack>
+
+          <Flex
+            direction="column"
+            mt={3}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Text>Don&apos;t have an account?</Text>
+            <Link as={RRLink} to="/register" color={"cyan.400"}>
+              Register
+            </Link>
+          </Flex>
         </Box>
         {error && (
           <Alert status="error">

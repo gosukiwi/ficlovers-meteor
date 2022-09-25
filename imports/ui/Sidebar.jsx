@@ -78,8 +78,8 @@ function SidebarContent({ onClose, ...rest }) {
     ]);
   } else {
     LinkItems = LinkItems.concat([
-      { name: t("sidebar.sign_up"), icon: FiEdit3, to: "/register" },
       { name: t("sidebar.sign_in"), icon: FiUser, to: "/login" },
+      { name: t("sidebar.sign_up"), icon: FiEdit3, to: "/register" },
     ]);
   }
 

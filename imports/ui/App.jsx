@@ -10,6 +10,7 @@ import NewFic from "./pages/NewFic";
 import Editor from "./pages/Editor/Editor";
 import Fic from "./pages/Fic";
 import FicSettings from "./pages/FicSettings";
+import Register from "./pages/Register";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="write" element={<Write />} />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
+        <Route path="register" element={<Register />} />
         <Route path="new" element={<NewFic />} />
         <Route path="editor/:id" element={<Editor />} />
         <Route path="fics/:id" element={<Fic />} />

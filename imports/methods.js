@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import { check, Match } from "meteor/check";
 import {
   FicsCollection,
@@ -245,5 +246,22 @@ Meteor.methods({
     }
 
     TagsCollection.insert({ name, count: 1 });
+  },
+
+  register: function ({ username, password, email }) {
+    if (this.userId)
+      throw new Meteor.Error("Log out before creating a new account");
+
+    check(username, String);
+    check(password, String);
+    check(email, String);
+
+    const user = Meteor.users.findOne({ username });
+    if (user) throw new Meteor.Error("Username already exists");
+
+    const userWithSameEmail = Meteor.users.findOne({ email });
+    if (userWithSameEmail) throw new Meteor.Error("Email already exists");
+
+    Accounts.createUser({ username, password, email });
   },
 });
