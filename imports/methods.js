@@ -53,6 +53,44 @@ Meteor.methods({
     });
   },
 
+  "fics.updateSettings": function ({
+    id,
+    title,
+    description,
+    tags,
+    disclaimer,
+    language,
+    nsfw,
+    crossover,
+  }) {
+    if (!this.userId) throw new Meteor.Error("Not authorized.");
+
+    check(id, String);
+    check(title, String);
+    check(description, String);
+    check(tags, Array);
+    check(disclaimer, String);
+    check(language, String);
+    check(nsfw, Boolean);
+    check(crossover, Boolean);
+
+    // Find tags
+    const tagDocuments = TagsCollection.find({ name: { $in: tags } }).fetch();
+
+    FicsCollection.update(id, {
+      $set: {
+        title,
+        description,
+        tags: tagDocuments,
+        disclaimer,
+        language,
+        nsfw,
+        crossover,
+        updatedAt: new Date(),
+      },
+    });
+  },
+
   "chapters.insert": function (title, body, ficId) {
     if (!this.userId) throw new Meteor.Error("Not authorized.");
 

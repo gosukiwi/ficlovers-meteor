@@ -47,6 +47,7 @@ editor:
   wip: Back to WIP
   save: Save
   preview: Preview
+  settings: Settings
 methods:
   chapters:
     delete: Fic must have at least one chapter
@@ -56,3 +57,13 @@ fic_settings:
   title: Title
   description: Description
   tags: Tags
+  save: Save
+  back: Back
+  disclaimer: Disclaimer
+  nsfw: Not Safe For Work (+18)
+  crossover: Crossover
+  editor: Editor
+  preview: Preview
+  language: Language
+shared:
+  disclaimer: The fictional characters in this fanfiction belong to their respective owners.

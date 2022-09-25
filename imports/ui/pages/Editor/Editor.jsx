@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { useParams, useNavigate, Link as RRLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import { Box, Heading, Flex, Input, Button } from "@chakra-ui/react";
+import { Box, Heading, Flex, Input, Button, Spacer } from "@chakra-ui/react";
 import { useTranslator } from "/imports/ui/i18n";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 import SimpleEditor from "/imports/ui/Editor";
@@ -142,6 +142,19 @@ export default function Editor() {
           mt={3}
         >
           Back
+        </Button>
+        <Spacer />
+        <Button
+          as={RRLink}
+          to={`/fics/settings/${id}`}
+          _hover={{
+            backgroundColor: "gray.300",
+          }}
+          size="sm"
+          bg="gray.200"
+          mt={3}
+        >
+          {t("editor.settings")}
         </Button>
         <Button
           as={RRLink}

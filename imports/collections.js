@@ -9,6 +9,15 @@ function inEnum(...values) {
   };
 }
 
+export const LANGUAGES = ["English", "Spanish", "Other"];
+
+export const TagsCollection = new Mongo.Collection("tags");
+const tagsSchema = new SimpleSchema({
+  name: { type: String, label: "Name", max: 15 },
+  count: { type: Number, defaultValue: 0 },
+});
+TagsCollection.attachSchema(tagsSchema);
+
 export const FicsCollection = new Mongo.Collection("fics");
 FicsCollection.attachSchema(
   new SimpleSchema({
@@ -19,6 +28,16 @@ FicsCollection.attachSchema(
       type: String,
       custom: inEnum("wip", "published", "finished"),
       defaultValue: "wip",
+    },
+    tags: { type: Array, label: "Tags", defaultValue: [] },
+    "tags.$": tagsSchema,
+    disclaimer: { type: String, label: "Disclaimer", max: 500 },
+    crossover: { type: Boolean, label: "Crossover", defaultValue: false },
+    nsfw: { type: Boolean, label: "NSFW", defaultValue: false },
+    language: {
+      type: String,
+      custom: inEnum(...LANGUAGES),
+      defaultValue: LANGUAGES[0],
     },
     createdAt: { type: Date },
     updatedAt: { type: Date },
@@ -35,13 +54,5 @@ ChaptersCollection.attachSchema(
     order: { type: Number, defaultValue: 0 },
     createdAt: { type: Date },
     updatedAt: { type: Date },
-  })
-);
-
-export const TagsCollection = new Mongo.Collection("tags");
-ChaptersCollection.attachSchema(
-  new SimpleSchema({
-    name: { type: String, label: "Name", max: 15 },
-    count: { type: Number, defaultValue: 0 },
   })
 );

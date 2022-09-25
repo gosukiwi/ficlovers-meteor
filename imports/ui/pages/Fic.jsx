@@ -102,13 +102,12 @@ export default function Fic() {
         justifyContent="center"
         boxShadow="lg"
       >
-        <Select onChange={(e) => navigate(`/fics/${id}/${e.target.value}`)}>
+        <Select
+          value={currentChapter._id}
+          onChange={(e) => navigate(`/fics/${id}/${e.target.value}`)}
+        >
           {chapters.map((chapter) => (
-            <option
-              selected={currentChapter._id === chapter._id}
-              key={chapter._id}
-              value={chapter._id}
-            >
+            <option key={chapter._id} value={chapter._id}>
               {chapter.title}
             </option>
           ))}

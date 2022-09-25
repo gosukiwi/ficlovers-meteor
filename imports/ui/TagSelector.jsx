@@ -6,24 +6,24 @@ import { FiX } from "react-icons/fi";
 import { TagsCollection } from "/imports/collections";
 
 export default function TagSelector({ value, onChange, max }) {
-  const [tagSearch, setTagSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [showMatches, setShowMatches] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
   const inputRef = useRef(null);
 
   const tags = useTracker(() => {
-    if (tagSearch === "") return [];
+    if (search === "") return [];
 
-    const handler = Meteor.subscribe("tags.byName", tagSearch);
+    const handler = Meteor.subscribe("tags.byName", search);
     if (!handler.ready()) return [];
 
     return TagsCollection.find({
-      name: { $regex: new RegExp(`^${tagSearch}`), $options: "i" },
+      name: { $regex: new RegExp(`^${search}`), $options: "i" },
     }).fetch();
-  }, [tagSearch]);
+  }, [search]);
 
   const handleTagSearchChanged = (e) => {
-    setTagSearch(e.target.value);
+    setSearch(e.target.value);
     setShowMatches(true);
   };
 
@@ -32,7 +32,7 @@ export default function TagSelector({ value, onChange, max }) {
   };
 
   const addTag = (tag) => {
-    setTagSearch("");
+    setSearch("");
     if (value.includes(tag)) return;
     if (max && value.length >= max) return;
 
@@ -42,17 +42,17 @@ export default function TagSelector({ value, onChange, max }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (value.includes(tagSearch)) return;
+    if (value.includes(search)) return;
 
-    Meteor.call("tags.insert", tagSearch, (err) => {
-      if (err) removeTag(tagSearch);
+    Meteor.call("tags.insert", search, (err) => {
+      if (err) removeTag(search);
     });
 
-    addTag(tagSearch);
+    addTag(search);
   };
 
   const handleTagSearchKeyDown = (e) => {
-    if (e.key === "Backspace" && tagSearch === "" && value.length > 0) {
+    if (e.key === "Backspace" && search === "" && value.length > 0) {
       removeTag(value[value.length - 1]);
     }
   };
@@ -97,7 +97,7 @@ export default function TagSelector({ value, onChange, max }) {
 
         <Input
           ref={inputRef}
-          value={tagSearch}
+          value={search}
           onChange={handleTagSearchChanged}
           onKeyDown={handleTagSearchKeyDown}
           border="none"
