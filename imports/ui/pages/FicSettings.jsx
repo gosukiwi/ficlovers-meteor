@@ -39,7 +39,6 @@ export default function FicSettings() {
   return (
     <Flex gap={3} direction="column">
       <Heading>{t("fic_settings.heading")}</Heading>
-
       <FormControl variant="floating">
         <FormLabel>{t("fic_settings.title")}</FormLabel>
         <Input
@@ -50,7 +49,6 @@ export default function FicSettings() {
           onChange={(e) => setTitle(e.target.value)}
         />
       </FormControl>
-
       <FormControl variant="floating">
         <FormLabel>{t("fic_settings.description")}</FormLabel>
         <Textarea
@@ -62,7 +60,6 @@ export default function FicSettings() {
           onChange={(e) => setDescription(e.target.value)}
         />
       </FormControl>
-
       <FormControl variant="floating">
         <FormLabel>{t("fic_settings.tags")}</FormLabel>
         <TagSelector />

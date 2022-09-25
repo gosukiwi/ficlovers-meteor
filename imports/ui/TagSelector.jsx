@@ -68,6 +68,7 @@ export default function TagSelector() {
   return (
     <Flex
       as="form"
+      direction="column"
       onSubmit={handleSubmit}
       borderRadius="md"
       border="1px"
@@ -76,7 +77,8 @@ export default function TagSelector() {
       py={1}
       bg="white"
       position="relative"
-      alignItems="center"
+      alignItems="flex-start"
+      justifyContent="flex-start"
       boxShadow={hasFocus ? "outline" : "none"}
       onClick={focusInput}
     >
@@ -122,16 +124,12 @@ export default function TagSelector() {
           color="black"
           fontSize="sm"
           bg="white"
-          borderRadius="md"
-          position="absolute"
-          left="0"
-          top="60px"
           overflow="hidden"
+          mt={3}
         >
           {tags.map((tag) => (
             <Box
-              borderBottom="1px"
-              borderColor="gray.200"
+              borderRadius="md"
               p={3}
               key={tag._id}
               onClick={() => addTag(tag.name)}
