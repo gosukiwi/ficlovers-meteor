@@ -21,6 +21,7 @@ export default function App() {
         <Route path="new" element={<NewFic />} />
         <Route path="editor/:id" element={<Editor />} />
         <Route path="fics/:id" element={<Fic />} />
+        <Route path="fics/:id/:chapterId" element={<Fic />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

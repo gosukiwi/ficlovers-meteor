@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { useParams, Link as RRLink } from "react-router-dom";
+import { useParams, useNavigate, Link as RRLink } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import {
   Flex,
@@ -16,7 +16,8 @@ import { FiEdit3 } from "react-icons/fi";
 import { FicsCollection, ChaptersCollection } from "/imports/collections";
 
 export default function Fic() {
-  const { id } = useParams();
+  const { id, chapterId } = useParams();
+  const navigate = useNavigate();
   const user = useTracker(() => Meteor.user());
   const [currentChapter, setCurrentChapter] = useState(null);
   const fic = useTracker(() => {
@@ -33,9 +34,23 @@ export default function Fic() {
     if (!handler.ready()) return [];
 
     const chapters = ChaptersCollection.find({ ficId: id }).fetch();
-    if (chapters.length > 0) setCurrentChapter(chapters[0]);
+
+    // Find current chapter
+    if (chapters.length === 0) return chapters;
+
+    if (!chapterId) {
+      setCurrentChapter(chapters[0]);
+    } else {
+      const current = chapters.find((c) => c._id === chapterId);
+      if (!current) {
+        navigate("/not-found");
+      } else {
+        setCurrentChapter(current);
+      }
+    }
+
     return chapters;
-  }, [id]);
+  }, [id, chapterId]);
 
   const author = useTracker(() => {
     if (!fic) return null;
@@ -87,10 +102,16 @@ export default function Fic() {
         justifyContent="center"
         boxShadow="lg"
       >
-        <Select>
-          <option value="option1">Chapter 1</option>
-          <option value="option2">Chapter 2</option>
-          <option value="option3">Chapter 3</option>
+        <Select onChange={(e) => navigate(`/fics/${id}/${e.target.value}`)}>
+          {chapters.map((chapter) => (
+            <option
+              selected={currentChapter._id === chapter._id}
+              key={chapter._id}
+              value={chapter._id}
+            >
+              {chapter.title}
+            </option>
+          ))}
         </Select>
         {isAuthor && (
           <Button
