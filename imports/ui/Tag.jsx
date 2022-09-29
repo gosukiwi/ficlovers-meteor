@@ -10,7 +10,7 @@ export default function Tag({ name }) {
       bg="cyan.400"
       color="white"
       cursor="pointer"
-      fontSize="sm"
+      fontSize="xs"
       textTransform="lowercase"
       _hover={{ bg: "cyan.500", color: "white" }}
     >

@@ -67,3 +67,9 @@ fic_settings:
   language: Language
 shared:
   disclaimer: The fictional characters in this fanfiction belong to their respective owners.
+search:
+  title: Search fics
+  title_contains: Title or description contains
+  search: Search
+  results: Results
+  no_results: Nothing was found with that criteria

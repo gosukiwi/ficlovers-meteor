@@ -32,7 +32,7 @@ FicsCollection.attachSchema(
       defaultValue: "wip",
     },
     tags: { type: Array, label: "Tags", defaultValue: [] },
-    "tags.$": tagsSchema,
+    "tags.$": String,
     disclaimer: { type: String, label: "Disclaimer", max: 500, optional: true },
     crossover: { type: Boolean, label: "Crossover", defaultValue: false },
     nsfw: { type: Boolean, label: "NSFW", defaultValue: false },

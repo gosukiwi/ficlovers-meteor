@@ -75,14 +75,11 @@ Meteor.methods({
     check(nsfw, Boolean);
     check(crossover, Boolean);
 
-    // Find tags
-    const tagDocuments = TagsCollection.find({ name: { $in: tags } }).fetch();
-
     FicsCollection.update(id, {
       $set: {
         title,
         description,
-        tags: tagDocuments,
+        tags,
         disclaimer,
         language,
         nsfw,

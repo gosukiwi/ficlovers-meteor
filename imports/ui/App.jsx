@@ -11,21 +11,23 @@ import Editor from "./pages/Editor/Editor";
 import Fic from "./pages/Fic";
 import FicSettings from "./pages/FicSettings";
 import Register from "./pages/Register";
+import Search from "./pages/Search";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<FicsIndex />} />
-        <Route path="write" element={<Write />} />
-        <Route path="login" element={<Login />} />
-        <Route path="logout" element={<Logout />} />
-        <Route path="register" element={<Register />} />
-        <Route path="new" element={<NewFic />} />
         <Route path="editor/:id" element={<Editor />} />
         <Route path="fics/:id" element={<Fic />} />
         <Route path="fics/:id/:chapterId" element={<Fic />} />
         <Route path="fics/settings/:id" element={<FicSettings />} />
+        <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
+        <Route path="new" element={<NewFic />} />
+        <Route path="register" element={<Register />} />
+        <Route path="write" element={<Write />} />
+        <Route path="search" element={<Search />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

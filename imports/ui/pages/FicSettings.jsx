@@ -40,7 +40,7 @@ export default function FicSettings() {
     setIsCrossover(fic.crossover);
     setDisclaimer(fic.disclaimer);
     setLanguage(fic.language);
-    if (fic.tags) setTags(fic.tags.map((t) => t.name));
+    if (fic.tags) setTags(fic.tags);
     return fic;
   }, [id]);
 
@@ -58,7 +58,8 @@ export default function FicSettings() {
         crossover: isCrossover,
       },
       (err) => {
-        console.log("DONE!", err);
+        // TODO: Handle error!
+        if (err) throw err;
       }
     );
   };
