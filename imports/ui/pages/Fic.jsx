@@ -93,7 +93,7 @@ export default function Fic() {
         </HStack>
         <Flex flexWrap="wrap" mt={3} gap={2}>
           {fic.tags.map((tag) => (
-            <Tag key={tag._id} name={tag.name} />
+            <Tag key={tag} name={tag} />
           ))}
         </Flex>
       </Flex>

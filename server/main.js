@@ -25,6 +25,7 @@ Meteor.startup(() => {
   FicsCollection.createIndex({ userId: 1 });
   FicsCollection.createIndex({ status: 1 });
   FicsCollection.createIndex({ title: "text", description: "text" });
+  FicsCollection.createIndex({ tags: 1 });
   ChaptersCollection.createIndex({ ficId: 1 });
   ChaptersCollection.createIndex({ userId: 1 });
   ChaptersCollection.createIndex({ order: 1 });

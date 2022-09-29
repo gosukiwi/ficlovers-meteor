@@ -19,9 +19,10 @@ import Tag from "/imports/ui/Tag";
 import TagSelector from "/imports/ui/TagSelector";
 
 export default function Search() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const t = useTranslator();
-  const keyword = searchParams.get("title") || "";
+  // search params
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keywordParam = searchParams.get("keyword") || "";
   const tagsParam =
     searchParams.get("tags") === null
       ? []
@@ -29,12 +30,13 @@ export default function Search() {
           .get("tags")
           .split(",")
           .filter((t) => t !== "");
-  const [title, setTitle] = useState(keyword);
+  // state
+  const [keyword, setKeyword] = useState(keywordParam);
   const [tags, setTags] = useState(tagsParam);
 
   const [results, isLoading] = useTracker(() => {
     const handler = Meteor.subscribe("fics.search", {
-      keyword,
+      keyword: keywordParam,
       tags: tagsParam,
     });
 
@@ -44,10 +46,10 @@ export default function Search() {
       status: "published",
     };
 
-    if (keyword !== "") {
+    if (keywordParam !== "") {
       query.$or = [
-        { title: new RegExp(keyword) },
-        { description: new RegExp(keyword) },
+        { title: new RegExp(keywordParam) },
+        { description: new RegExp(keywordParam) },
       ];
     }
 
@@ -55,7 +57,7 @@ export default function Search() {
       query.tags = { $all: tagsParam };
     }
 
-    if (keyword === "" && tagsParam.length === 0) return [[], false];
+    if (keywordParam === "" && tagsParam.length === 0) return [[], false];
 
     const results = FicsCollection.find(query).fetch();
     return [results, false];
@@ -64,7 +66,7 @@ export default function Search() {
   const handleSearchFormSubmitted = (e) => {
     e.preventDefault();
 
-    setSearchParams({ title, tags: tags.join(",") });
+    setSearchParams({ keyword, tags: tags.join(",") });
   };
 
   return (
@@ -76,19 +78,19 @@ export default function Search() {
     >
       <Heading>{t("search.title")}</Heading>
 
-      <FormControl id="title">
-        <FormLabel>{t("search.title_contains")}</FormLabel>
+      <FormControl id="keyword">
+        <FormLabel>{t("search.keyword")}</FormLabel>
         <Input
           bg="white"
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
         />
       </FormControl>
 
-      <FormControl id="title">
+      <FormControl id="tags">
         <FormLabel>{t("search.tags")}</FormLabel>
-        <TagSelector value={tags} onChange={(tags) => setTags(tags)} />
+        <TagSelector readOnly value={tags} onChange={(tags) => setTags(tags)} />
       </FormControl>
 
       <Button type="submit" colorScheme="cyan" color="white">

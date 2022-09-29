@@ -5,7 +5,7 @@ import { Flex, Input, Box, Text } from "@chakra-ui/react";
 import { FiX } from "react-icons/fi";
 import { TagsCollection } from "/imports/collections";
 
-export default function TagSelector({ value, onChange, max }) {
+export default function TagSelector({ value, onChange, max, readOnly }) {
   const [search, setSearch] = useState("");
   const [showMatches, setShowMatches] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
@@ -39,9 +39,8 @@ export default function TagSelector({ value, onChange, max }) {
     onChange([...value, tag]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
+    if (readOnly) return;
     if (value.includes(search)) return;
 
     Meteor.call("tags.insert", search, (err) => {
@@ -55,6 +54,10 @@ export default function TagSelector({ value, onChange, max }) {
     if (e.key === "Backspace" && search === "" && value.length > 0) {
       removeTag(value[value.length - 1]);
     }
+
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
   };
 
   const focusInput = () => {
@@ -63,9 +66,7 @@ export default function TagSelector({ value, onChange, max }) {
 
   return (
     <Flex
-      as="form"
       direction="column"
-      onSubmit={handleSubmit}
       borderRadius="md"
       border="1px"
       color="gray.200"

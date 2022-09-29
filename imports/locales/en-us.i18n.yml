@@ -69,7 +69,8 @@ shared:
   disclaimer: The fictional characters in this fanfiction belong to their respective owners.
 search:
   title: Search fics
-  title_contains: Title or description contains
+  keyword: Title or description
+  tags: Tags
   search: Search
   results: Results
   no_results: Nothing was found with that criteria
