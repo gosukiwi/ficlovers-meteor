@@ -74,3 +74,7 @@ search:
   search: Search
   results: Results
   no_results: Nothing was found with that criteria
+  crossovers: Include Crossovers
+  nsfw: Include NSFW
+  language: Language
+  any_language: Any

@@ -25,26 +25,38 @@ Meteor.publish("fics.byId", function (_id) {
   });
 });
 
-Meteor.publish("fics.search", function ({ keyword, tags }) {
-  check(keyword, String);
-  check(tags, Array);
+Meteor.publish(
+  "fics.search",
+  function ({ keyword, tags, crossover, nsfw, language }) {
+    check(keyword, String);
+    check(tags, Array);
+    check(crossover, Boolean);
+    check(nsfw, Boolean);
+    check(language, String);
 
-  if (keyword === "" && tags.length === 0) return [];
+    if (keyword === "" && tags.length === 0) return [];
 
-  const query = {
-    status: "published",
-  };
+    const query = {
+      status: "published",
+      crossover,
+      nsfw,
+    };
 
-  if (keyword !== "") {
-    query.$text = { $search: keyword };
+    if (keyword !== "") {
+      query.$text = { $search: keyword };
+    }
+
+    if (tags.length > 0) {
+      query.tags = { $all: tags };
+    }
+
+    if (language !== "") {
+      query.language = language;
+    }
+
+    return FicsCollection.find(query);
   }
-
-  if (tags.length > 0) {
-    query.tags = { $all: tags };
-  }
-
-  return FicsCollection.find(query);
-});
+);
 
 Meteor.publish("user.chapters.byFicId", function (ficId) {
   check(ficId, String);

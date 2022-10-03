@@ -12,15 +12,18 @@ import {
   FormControl,
   FormLabel,
   Image,
+  Switch,
+  Select,
 } from "@chakra-ui/react";
 import { FiChevronRight } from "react-icons/fi";
-import { FicsCollection } from "/imports/collections";
+import { FicsCollection, LANGUAGES } from "/imports/collections";
 import Tag from "/imports/ui/Tag";
 import TagSelector from "/imports/ui/TagSelector";
 
 export default function Search() {
   const t = useTranslator();
-  // search params
+
+  // Get search parameters from query string
   const [searchParams, setSearchParams] = useSearchParams();
   const keywordParam = searchParams.get("keyword") || "";
   const tagsParam =
@@ -30,20 +33,34 @@ export default function Search() {
           .get("tags")
           .split(",")
           .filter((t) => t !== "");
+  const crossoversParam = searchParams.get("crossovers") === "true";
+  const nsfwParam = searchParams.get("nsfw") === "true";
+  const languageParam = searchParams.get("language") || "";
+
+  const isSearchEmpty = keywordParam === "" && tagsParam.length === 0;
+
   // state
   const [keyword, setKeyword] = useState(keywordParam);
   const [tags, setTags] = useState(tagsParam);
+  const [crossovers, setCrossovers] = useState(crossoversParam);
+  const [nsfw, setNsfw] = useState(nsfwParam);
+  const [language, setLanguage] = useState(languageParam);
 
   const [results, isLoading] = useTracker(() => {
     const handler = Meteor.subscribe("fics.search", {
       keyword: keywordParam,
       tags: tagsParam,
+      crossover: crossovers,
+      nsfw,
+      language,
     });
 
     if (!handler.ready()) return [[], true];
 
     const query = {
       status: "published",
+      crossover: crossovers,
+      nsfw,
     };
 
     if (keywordParam !== "") {
@@ -57,6 +74,10 @@ export default function Search() {
       query.tags = { $all: tagsParam };
     }
 
+    if (language !== "") {
+      query.language = language;
+    }
+
     if (keywordParam === "" && tagsParam.length === 0) return [[], false];
 
     const results = FicsCollection.find(query).fetch();
@@ -66,7 +87,13 @@ export default function Search() {
   const handleSearchFormSubmitted = (e) => {
     e.preventDefault();
 
-    setSearchParams({ keyword, tags: tags.join(",") });
+    setSearchParams({
+      keyword,
+      tags: tags.join(","),
+      crossovers,
+      nsfw,
+      language,
+    });
   };
 
   return (
@@ -93,15 +120,50 @@ export default function Search() {
         <TagSelector readOnly value={tags} onChange={(tags) => setTags(tags)} />
       </FormControl>
 
+      <FormControl id="crossovers">
+        <FormLabel>{t("search.crossovers")}</FormLabel>
+        <Switch
+          colorScheme="cyan"
+          isChecked={crossovers}
+          onChange={() => setCrossovers(!crossovers)}
+        />
+      </FormControl>
+
+      <FormControl id="nsfw">
+        <FormLabel>{t("search.nsfw")}</FormLabel>
+        <Switch
+          colorScheme="cyan"
+          isChecked={nsfw}
+          onChange={() => setNsfw(!nsfw)}
+        />
+      </FormControl>
+
+      <FormControl id="language">
+        <FormLabel>{t("search.language")}</FormLabel>
+        <Select
+          bg="white"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+          <option value="">{t("search.any_language")}</option>
+          {LANGUAGES.map((lang) => (
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
+
       <Button type="submit" colorScheme="cyan" color="white">
         {t("search.search")}
       </Button>
 
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <SearchResults results={results} />
-      )}
+      {!isSearchEmpty &&
+        (isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <SearchResults results={results} />
+        ))}
     </Flex>
   );
 }
